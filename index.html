@@ -1,0 +1,970 @@
+<title>La Bàn Nghề Nghiệp</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Lexend:wght@400;500;600&family=Patrick+Hand&display=swap">
+<style>
+/* Concept: a school exercise book. Light = vở ô li (grid paper, blue ink, red-pen grades, highlighters). Dark = bảng đen (blackboard, chalk).
+   Boldness lives in one place: each match score is "graded" in red pen. Everything else stays quiet. */
+:root{
+  --paper:#F6F9FF; --paper2:#FFFFFF; --grid:#D3E1F7; --margin:#F0A3A3;
+  --txt:#1B2147; --ink:#1D3BB0; --muted:#586088; --line:#C6D4EC; --pen:#D63A31; --on-hl:#17183A; --on-ink:#FFFFFF;
+  --hb:#9CCBFF; --ho:#FFC48A; --hg:#A6EDB5; --hp:#FFB0CF; --hv:#D9C2FF; --hy:#FFE55C;
+  --font-display:'Fraunces',Georgia,'Times New Roman',serif;
+  --font-body:'Lexend',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-hand:'Patrick Hand','Comic Sans MS',cursive;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0F2420; --paper2:#16302A; --grid:rgba(255,255,255,.07); --margin:rgba(255,140,140,.5);
+  --txt:#E6EBE0; --ink:#F3F5EC; --muted:#A3B7AE; --line:#2F4D43; --pen:#FF8E8A; --on-hl:#13172E; --on-ink:#0F2420;
+  --hb:#86B9F5; --ho:#F2A95F; --hg:#7FD998; --hp:#F58FB8; --hv:#BC9CF5; --hy:#F0D84A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0F2420; --paper2:#16302A; --grid:rgba(255,255,255,.07); --margin:rgba(255,140,140,.5);
+  --txt:#E6EBE0; --ink:#F3F5EC; --muted:#A3B7AE; --line:#2F4D43; --pen:#FF8E8A; --on-hl:#13172E; --on-ink:#0F2420;
+  --hb:#86B9F5; --ho:#F2A95F; --hg:#7FD998; --hp:#F58FB8; --hv:#BC9CF5; --hy:#F0D84A; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background-color:var(--paper);color:var(--txt);font-family:var(--font-body);font-size:15px;line-height:1.65;overflow-x:hidden;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:1120px;margin:0 auto;position:relative;padding-left:12px}
+.wrap::before{content:"";position:absolute;left:-6px;top:0;bottom:-64px;width:5px;border-inline:1.5px solid var(--margin);pointer-events:none}
+h1,h2,h3,h4{font-family:var(--font-display);margin:0;line-height:1.1;text-wrap:balance;color:var(--ink)}
+p{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--pen);outline-offset:3px}
+.hand{font-family:var(--font-hand)}
+
+.topbar{display:flex;align-items:center;gap:10px;padding-block:20px 6px;font-family:var(--font-display);font-weight:800;font-size:20px;color:var(--ink)}
+.topbar svg{width:32px;height:32px;flex:none}
+.topbar .hand{margin-left:auto;font-weight:400;font-size:17px;color:var(--pen);transform:rotate(-2deg)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:center;padding-block:28px 52px}
+.hero h1{font-size:clamp(38px,6vw,70px);font-weight:800;letter-spacing:-.02em;line-height:1.02;font-variation-settings:"opsz" 144}
+.hero .lead{margin-top:20px;max-width:46ch;font-size:17px;color:var(--txt)}
+.cta{display:flex;flex-wrap:wrap;gap:16px 22px;align-items:center;margin-top:30px}
+.btn{background:var(--ink);color:var(--on-ink);border:2px solid var(--ink);border-radius:10px;padding:13px 26px;font-weight:600;cursor:pointer;font-size:15.5px;box-shadow:4px 4px 0 var(--pen);transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--pen)}
+.btn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--pen)}
+.linkbtn{background:none;border:0;padding:6px 2px;cursor:pointer;color:var(--ink);font-weight:500;font-size:15.5px;text-decoration:underline;text-decoration-color:var(--hy);text-decoration-thickness:6px;text-underline-offset:-2px;text-decoration-skip-ink:none}
+.linkbtn:hover{text-decoration-color:var(--ho)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:none}
+.btn.ghost:hover{background:var(--hy);color:var(--on-hl);transform:none;box-shadow:none}
+
+.techwrap{position:relative;justify-self:center;width:100%;max-width:480px}
+.tech{width:100%;display:block;overflow:visible}
+.tech .ln{fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.tech .dr{stroke-dasharray:1;animation:draw 1.6s cubic-bezier(.6,.1,.3,1) backwards;animation-delay:var(--d,0s)}
+@keyframes draw{from{stroke-dashoffset:1}}
+.tech .orbit{fill:none;stroke:var(--ink);stroke-width:1.4;stroke-dasharray:2 9;opacity:.3}
+.tech .pulse{fill:none;stroke:var(--pen);stroke-width:4;stroke-linecap:round;stroke-dasharray:3 97;animation:flow 4.5s linear infinite;animation-delay:calc(var(--d,0s) + 1.8s)}
+@keyframes flow{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+.tech .pin{stroke:var(--ink);stroke-width:7;stroke-dasharray:6 8;fill:none}
+.tech .fillhl{stroke:var(--ink);stroke-width:2.6;stroke-linejoin:round}
+.tech .lab{font-family:var(--font-hand);font-size:18px;fill:var(--txt);text-anchor:middle}
+.tech .note{font-family:var(--font-hand);font-size:20px;fill:var(--pen);text-anchor:middle}
+.tech .big{font-family:var(--font-display);font-weight:800;fill:var(--on-hl)}
+.postit{position:absolute;width:168px;padding:10px 14px 12px;color:var(--on-hl);font-family:var(--font-hand);font-size:18px;line-height:1.2;box-shadow:2px 3px 0 rgba(0,0,0,.14)}
+.postit b{display:block;font-family:var(--font-display);font-size:26px;font-weight:800;line-height:1.1}
+.postit.a{background:var(--hy);top:-1%;left:calc(50% - 84px);transform:rotate(3deg)}
+.postit.b{background:var(--hp);bottom:-3%;left:calc(50% - 84px);transform:rotate(-3deg)}
+
+/* sections */
+section{margin-top:56px}
+.sec-h{margin-bottom:22px}
+.sec-h h2{font-size:clamp(28px,4vw,42px);font-weight:800}
+.sec-h p{margin-top:8px;color:var(--muted);max-width:56ch}
+.hot{display:grid;gap:4px}
+.hrow{display:grid;grid-template-columns:34px minmax(0,1.25fr) minmax(0,2fr) 70px;gap:16px;align-items:center;padding-block:10px;border-bottom:1.5px dashed var(--line)}
+.hrow .rk{font-family:var(--font-hand);font-size:26px;color:var(--pen);line-height:1}
+.hrow .nm{font-family:var(--font-display);font-weight:700;font-size:18px;line-height:1.2;color:var(--ink)}
+.hrow .nm small{display:block;font-family:var(--font-body);font-weight:400;color:var(--muted);font-size:12.5px;margin-top:2px}
+.hrow .tr{height:20px;position:relative}
+.hrow .tr i{position:absolute;left:0;top:0;height:100%;background:var(--c);clip-path:polygon(0 18%,98% 0,100% 82%,1% 100%);animation:grow .9s cubic-bezier(.3,.7,.2,1) backwards;animation-delay:calc(var(--i)*60ms);transform-origin:left}
+@keyframes grow{from{transform:scaleX(0)}}
+.hrow .vl{text-align:right;font-family:var(--font-display);font-weight:800;font-size:24px;color:var(--ink);font-variant-numeric:tabular-nums}
+.hrow .vl small{font-family:var(--font-body);font-weight:400;font-size:12px;color:var(--muted)}
+
+/* form = phiếu */
+.sheet{position:relative;background:var(--paper2);border:2px solid var(--ink);border-radius:8px;padding:34px 30px 28px;box-shadow:7px 7px 0 var(--hb)}
+.sheet-h{display:flex;flex-wrap:wrap;gap:10px 24px;align-items:end;justify-content:space-between;margin-bottom:26px;padding-bottom:16px;border-bottom:2px solid var(--ink)}
+.sheet-h h2{font-size:clamp(26px,3.6vw,38px);font-weight:800}
+.prog{display:flex;align-items:center;gap:12px;font-family:var(--font-hand);font-size:20px;color:var(--pen)}
+.prog .trk{width:120px;height:10px;border:2px solid var(--ink);border-radius:6px;overflow:hidden;background:transparent}
+.prog .fill{height:100%;width:0;background:var(--hg);transition:width .4s}
+.steps{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:34px 40px}
+.step{min-width:0}
+.step.full{grid-column:1/-1;padding-top:26px;border-top:1.5px dashed var(--line)}
+.step-h{display:flex;align-items:baseline;gap:10px}
+.step-h .n{font-family:var(--font-hand);font-size:28px;color:var(--pen);line-height:1}
+.step h3{font-size:24px;font-weight:700}
+.step .hint{font-size:13.5px;color:var(--muted);margin:4px 0 14px}
+.step .hint b{color:var(--pen);font-family:var(--font-hand);font-size:20px;font-weight:400}
+.levels{display:grid}
+.level{display:flex;align-items:center;gap:14px;text-align:left;background:none;border:0;border-bottom:1.5px dashed var(--line);padding:11px 4px;cursor:pointer;transition:background .15s}
+.level:hover{background:color-mix(in srgb,var(--hy) 28%,transparent)}
+.box{width:22px;height:22px;border:2px solid var(--ink);border-radius:4px;flex:none;position:relative;background:var(--paper2)}
+.level[aria-pressed="true"] .box::after{content:"";position:absolute;left:5px;top:-5px;width:9px;height:19px;border:solid var(--pen);border-width:0 4px 4px 0;transform:rotate(40deg);animation:tick .25s ease-out backwards}
+@keyframes tick{from{clip-path:inset(0 100% 100% 0)}}
+.level b{display:block;font-weight:600;font-size:15.5px;color:var(--ink)}
+.level span.s{font-size:12.5px;color:var(--muted)}
+.level[aria-pressed="true"] b{background:linear-gradient(transparent 55%,var(--hy) 55%);display:inline}
+.score{display:block;margin-top:18px;font-size:13.5px;color:var(--muted)}
+.score input{width:92px;margin-left:8px;padding:6px 8px;border:0;border-bottom:2px solid var(--ink);background:transparent;color:var(--txt);font:inherit;font-size:16px;font-variant-numeric:tabular-nums;border-radius:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{--cc:var(--ho);border:1.5px solid var(--line);background:transparent;border-radius:6px;padding:6px 12px;cursor:pointer;font-size:14px;text-align:left;line-height:1.35;color:var(--txt);transition:background .12s,border-color .12s,transform .12s}
+.chip:hover{border-color:var(--ink)}
+.chip small{display:block;font-size:11.5px;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--cc);border-color:var(--ink);color:var(--on-hl);transform:rotate(-1.2deg);font-weight:500}
+.chip[aria-pressed="true"] small{color:var(--on-hl);opacity:.75}
+.chip[aria-pressed="true"]:nth-child(even){transform:rotate(1deg)}
+.catgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(172px,1fr));gap:26px 22px}
+.cat h4{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.cat h4::before{content:"";width:16px;height:10px;background:var(--cc);clip-path:polygon(0 20%,100% 0,95% 100%,3% 85%);flex:none}
+.actions{display:flex;flex-wrap:wrap;gap:16px 22px;align-items:center;margin-top:30px;padding-top:22px;border-top:2px solid var(--ink)}
+.err{font-family:var(--font-hand);font-size:20px;color:var(--pen)}
+
+/* results = bảng điểm */
+#results{scroll-margin-top:16px}
+#results:empty{display:none}
+.res-h h2{font-size:clamp(28px,4vw,44px);font-weight:800}
+.res-h p{margin:8px 0 18px;color:var(--muted);max-width:70ch}
+.toolbar{display:flex;flex-wrap:wrap;gap:12px 26px;align-items:center;margin-bottom:12px}
+.toolbar .lbl{font-family:var(--font-hand);font-size:19px;color:var(--pen)}
+.sort,.gf{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.sort .chip,.gf .chip{padding:4px 11px;font-size:13.5px;--cc:var(--hy)}
+.notice{background:var(--hy);color:var(--on-hl);padding:12px 18px;font-size:14px;margin-bottom:14px;transform:rotate(-.4deg);box-shadow:2px 3px 0 rgba(0,0,0,.14)}
+details.card{border-bottom:1.5px dashed var(--line);--gc:var(--hb)}
+details.card[open]{background:var(--paper2);border:2px solid var(--ink);border-radius:8px;box-shadow:7px 7px 0 var(--gc);margin-block:14px 18px}
+details.card>summary{list-style:none;cursor:pointer;padding:18px 14px;display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:8px 22px;align-items:center}
+details.card>summary::-webkit-details-marker{display:none}
+details.card:not([open])>summary:hover{background:color-mix(in srgb,var(--gc) 22%,transparent)}
+.grade{position:relative;width:96px;height:78px;text-align:center}
+.grade svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.grade .ring{fill:none;stroke:var(--pen);stroke-width:3.2;stroke-linecap:round;stroke-dasharray:1;animation:draw 1s cubic-bezier(.6,.1,.3,1) backwards;animation-delay:calc(var(--i,0)*80ms + .1s)}
+.grade b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--font-hand);font-weight:400;font-size:44px;color:var(--pen);line-height:1;animation:pop .35s ease-out backwards;animation-delay:calc(var(--i,0)*80ms + .5s)}
+@keyframes pop{from{transform:scale(1.7) rotate(-8deg);opacity:0}}
+.grade small{position:absolute;left:0;right:0;bottom:-18px;font-family:var(--font-hand);font-size:15px;color:var(--pen);white-space:nowrap}
+.gbadge{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+.gbadge i{width:18px;height:10px;background:var(--gc);clip-path:polygon(0 20%,100% 0,95% 100%,3% 85%);flex:none}
+.card h3{font-size:clamp(20px,2.6vw,26px);font-weight:700;margin-top:3px}
+.pills{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;font-size:13px;color:var(--muted)}
+.pills span{white-space:nowrap}
+.pills .t{color:var(--ink);font-weight:600;background:linear-gradient(transparent 58%,var(--ho) 58%)}
+.pills .a{color:var(--ink);background:linear-gradient(transparent 58%,var(--hg) 58%)}
+.pills .w{color:var(--pen)}
+.prosp{text-align:right}
+.prosp b{display:block;font-family:var(--font-display);font-weight:800;font-size:30px;color:var(--ink);line-height:1;font-variant-numeric:tabular-nums}
+.prosp span{font-size:12px;color:var(--muted)}
+.chev{width:20px;height:20px;color:var(--ink);transition:transform .25s;margin:6px 0 0 auto;display:block}
+details[open] .chev{transform:rotate(180deg)}
+.body{padding:8px 24px 30px;display:grid;gap:34px}
+.body h4{font-size:20px;font-weight:700;margin:0 0 12px}
+.pitch{max-width:68ch;font-size:16px;padding-top:6px;border-top:2px solid var(--ink);padding-top:18px}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px}
+.cols>div{min-width:0}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 22px}
+.kpi{padding:10px 0;border-bottom:1.5px dashed var(--line)}
+.kpi b{font-family:var(--font-display);font-size:30px;font-weight:800;display:block;line-height:1.1;color:var(--ink);font-variant-numeric:tabular-nums;background:linear-gradient(transparent 62%,var(--gc) 62%);width:max-content;max-width:100%}
+.kpi span{font-size:12.5px;color:var(--muted);line-height:1.4;display:block;margin-top:4px}
+.bars{display:grid;gap:12px}
+.bar{display:grid;grid-template-columns:104px minmax(0,1fr) 62px;gap:12px;align-items:center;font-size:13px}
+.bar .t{height:18px;position:relative}
+.bar i{position:absolute;left:0;top:0;height:100%;background:var(--gc);clip-path:polygon(0 15%,98% 0,100% 85%,1% 100%);transform-origin:left;animation:grow .9s cubic-bezier(.3,.7,.2,1) backwards}
+.bar em{font-style:normal;font-family:var(--font-display);font-weight:700;font-size:16px;text-align:right;font-variant-numeric:tabular-nums}
+.idx{margin-top:18px;font-size:13px;color:var(--muted)}
+.idx b{color:var(--ink);font-family:var(--font-display);font-size:18px}
+.road{list-style:none;margin:0;padding:0}
+.road li{display:grid;grid-template-columns:40px 150px minmax(0,1fr);gap:0 14px;padding-bottom:22px;position:relative}
+.road li::after{content:"";position:absolute;left:19px;top:42px;bottom:2px;border-left:2px dotted var(--ink);opacity:.5}
+.road li:last-child{padding-bottom:0}.road li:last-child::after{display:none}
+.road .nn{width:38px;height:38px;border:2px solid var(--ink);border-radius:50%;background:var(--gc);display:grid;place-items:center;font-family:var(--font-hand);font-size:22px;color:var(--on-hl);line-height:1}
+.road b{font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--ink);padding-top:6px}
+.road span.d{font-size:14.5px;padding-top:6px}
+.tags{display:flex;flex-wrap:wrap;gap:6px 8px}
+.tags span{border:1.5px solid var(--line);border-radius:6px;padding:2px 10px;font-size:13.5px}
+
+/* social photo */
+.photo{background:var(--paper2);padding:14px 14px 20px;border:1.5px solid var(--line);transform:rotate(-.7deg);position:relative;box-shadow:3px 5px 0 rgba(0,0,0,.12);margin-top:34px}
+.photo::before,.photo::after{content:"";position:absolute;top:-16px;width:110px;height:30px;background:repeating-linear-gradient(135deg,var(--hy) 0 8px,color-mix(in srgb,var(--hy) 70%,#fff) 8px 16px);opacity:.88}
+.photo::before{left:8%;transform:rotate(-6deg)}.photo::after{right:8%;transform:rotate(5deg)}
+.soc{display:block;width:100%;height:auto}
+.soc .star{fill:#fff;animation:tw 3.5s ease-in-out infinite}
+.soc .rays{transform-box:fill-box;transform-origin:center;animation:spin 120s linear infinite}
+.soc .cloud{fill:rgba(255,255,255,.16);animation:cl 60s linear infinite}
+.soc .cloud.c2{animation-duration:80s;animation-delay:-30s}
+.soc .win{fill:#FFD27A;animation:tw 5s ease-in-out infinite}
+.soc .hrt{transform-box:fill-box;transform-origin:center;animation:beat 1.8s ease-in-out infinite}
+@keyframes tw{50%{opacity:.25}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes cl{from{transform:translateX(-160px)}to{transform:translateX(1120px)}}
+@keyframes beat{15%{transform:scale(1.25)}30%{transform:scale(1)}45%{transform:scale(1.18)}}
+.cap{font-family:var(--font-hand);font-size:20px;color:var(--pen);margin-top:12px;transform:rotate(-.8deg)}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(176px,1fr));gap:18px;margin-top:30px}
+.sn{background:var(--c);color:var(--on-hl);padding:14px 16px 16px;box-shadow:2px 3px 0 rgba(0,0,0,.14)}
+.sn:nth-child(odd){transform:rotate(-1.4deg)}.sn:nth-child(even){transform:rotate(1.2deg)}
+.sn b{display:block;font-family:var(--font-display);font-size:19px;font-weight:800;line-height:1.15;margin-bottom:6px}
+.sn strong{font-family:var(--font-hand);font-weight:400;font-size:34px;line-height:1;display:block}
+.sn em{font-style:normal;font-size:12.5px;display:block;line-height:1.45}
+.foot{margin-top:60px;padding-top:20px;border-top:2px solid var(--ink);font-size:13px;color:var(--muted);display:grid;gap:10px;max-width:80ch}
+.foot b{color:var(--ink)}
+.empty{border:2px dashed var(--ink);padding:34px;text-align:center;color:var(--muted)}
+
+
+/* ---------- tech + community layer ---------- */
+:root{--cy:#0A8FB0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--cy:#52E0FF}}
+:root[data-theme="dark"]{--cy:#52E0FF}
+.tech .chipbody{fill:#0D1B52;stroke:var(--cy);stroke-width:3;stroke-linejoin:round}
+.tech .chipt{font-family:var(--font-display);font-weight:800;fill:#7CE7FF;filter:drop-shadow(0 0 6px #19C6F0)}
+.tech .pin{stroke:var(--cy)}
+.tech .pulse{stroke:var(--cy);filter:drop-shadow(0 0 3px var(--cy))}
+.tech .lab{font-size:17px}
+.together{display:flex;align-items:center;gap:16px;margin-top:34px;max-width:50ch}
+.together p{font-size:13.5px;color:var(--muted);line-height:1.5}
+.pile{display:flex;flex:none}.pile svg{margin-left:-12px;border-radius:50%;background:var(--paper2)}.pile svg:first-child{margin-left:0}
+.cd{display:block;width:100%;color:var(--ink);opacity:.55;margin-top:6px}
+.sheet-body{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:34px 36px;align-items:start}
+@keyframes blink{50%{opacity:0}}
+.share{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin:0 0 14px}
+.share .ok{font-family:var(--font-hand);font-size:19px;color:var(--pen)}
+.share textarea{width:100%;min-height:120px;font:inherit;font-size:13px;background:var(--paper2);color:var(--txt);border:1.5px solid var(--ink);border-radius:6px;padding:10px}
+@media (max-width:1000px){.sheet-body{grid-template-columns:1fr}.summary{position:static}}
+
+
+/* ---------- quiz & persona ---------- */
+.quiz{border:2px dashed var(--ink);border-radius:8px;background:color-mix(in srgb,var(--hy) 10%,transparent)}
+.quiz>summary{cursor:pointer;padding:12px 16px;font-weight:600;color:var(--ink);list-style:none}
+.quiz>summary::-webkit-details-marker{display:none}
+.quiz>summary::before{content:"+";display:inline-grid;place-items:center;width:22px;height:22px;border:2px solid var(--ink);border-radius:4px;margin-right:10px;font-family:var(--font-hand);font-size:19px;line-height:1}
+.quiz[open]>summary::before{content:"–"}
+#quiz,#talent{padding:4px 18px 22px;display:grid;gap:26px}
+.tl{border-top:2px solid var(--ink);padding-top:10px;margin-top:8px}
+.tl-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+.tl-h b{font-family:var(--font-display);font-size:17px;color:var(--ink)}
+.tl-h .lvl{font-family:var(--font-hand);font-size:19px;color:var(--pen)}
+#tprof{margin-top:16px}
+.tprof{border:2px solid var(--ink);border-radius:8px;padding:14px 18px;background:var(--paper2);display:grid;gap:14px}
+.tprof .qh{font-size:12.5px;color:var(--muted);margin:0}
+.hol.wide .r{grid-template-columns:150px minmax(0,1fr) 92px}
+@media (max-width:860px){.hol.wide .r{grid-template-columns:110px minmax(0,1fr) 84px}}
+.qg h5{font-family:var(--font-display);font-size:19px;margin:0 0 4px;color:var(--ink)}
+.qg .qh{font-size:12.5px;color:var(--muted);margin-bottom:10px;max-width:70ch}
+.q{border:0;margin:0;padding:12px 0;border-bottom:1.5px dashed var(--line);min-width:0}
+.q legend{padding:0;font-size:14.5px;margin-bottom:8px;max-width:72ch;float:left;width:100%}
+.q .scale{clear:both;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.q label{position:relative;cursor:pointer}
+.q input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.q label span{display:grid;place-items:center;width:38px;height:38px;border:2px solid var(--ink);border-radius:50%;font-family:var(--font-hand);font-size:20px;line-height:1;background:var(--paper2);transition:background .12s,transform .12s}
+.q label:hover span{background:color-mix(in srgb,var(--hy) 45%,var(--paper2))}
+.q input:checked+span{background:var(--hy);color:var(--on-hl);transform:rotate(-4deg) scale(1.06)}
+.q input:focus-visible+span{outline:3px solid var(--pen);outline-offset:3px}
+.q .ends{display:flex;gap:8px;font-size:12px;color:var(--muted);margin-left:6px}
+.persona{display:grid;gap:14px}
+.persona .pf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:28px}
+.hol{display:grid;gap:7px}
+.hol .r{display:grid;grid-template-columns:96px minmax(0,1fr) 28px;gap:10px;align-items:center;font-size:13px}
+.hol .r .t{height:14px;position:relative;border-bottom:1.5px solid var(--line)}
+.hol .r i{position:absolute;left:0;bottom:0;height:100%;background:var(--hv);clip-path:polygon(0 15%,98% 0,100% 85%,1% 100%)}
+.hol .r.on i{background:var(--hg)}
+.hol .r.on span:first-child{font-weight:600;color:var(--ink);background:linear-gradient(transparent 58%,var(--hg) 58%)}
+.hol .r em{font-style:normal;font-variant-numeric:tabular-nums;text-align:right;color:var(--muted)}
+.gaps{display:grid;gap:12px}
+.gap{border-bottom:1.5px dashed var(--line);padding-bottom:10px}
+.gap b{font-family:var(--font-display);color:var(--ink);font-size:16px}
+.gap .lv{font-family:var(--font-hand);font-size:19px;color:var(--pen);margin-left:8px}
+.gap p{font-size:13.5px;margin-top:3px}
+.ok{font-family:var(--font-hand);font-size:20px;color:var(--ink);background:linear-gradient(transparent 55%,var(--hg) 55%);width:max-content;max-width:100%}
+.remark{font-family:var(--font-hand);font-size:20px;line-height:1.35;color:var(--pen);border:2px solid var(--pen);border-radius:8px;padding:10px 14px;transform:rotate(-.4deg);max-width:74ch}
+
+/* ---------- plain summary + gentle life ---------- */
+.summary{position:sticky;top:16px;background:var(--paper2);border:2px solid var(--ink);border-radius:8px;padding:18px 20px;box-shadow:6px 6px 0 var(--hg)}
+.summary h4{font-size:21px;margin-bottom:12px}
+.summary dl{margin:0;display:grid;gap:10px}
+.summary dt{font-size:12.5px;color:var(--muted)}
+.summary dd{margin:2px 0 0;font-weight:500;color:var(--txt);overflow-wrap:anywhere}
+.summary dd.empty-v{color:var(--muted);font-weight:400}
+.summary .cnt{margin-top:16px;padding-top:14px;border-top:1.5px dashed var(--line);font-size:14px}
+.summary .cnt b{display:block;font-family:var(--font-display);font-size:38px;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.herorhs{justify-self:center;width:100%;max-width:480px}
+.herorhs .techwrap{max-width:none}
+.avinfo{margin-top:20px;min-height:3.6em;text-align:center;font-family:var(--font-hand);font-size:20px;line-height:1.35;color:var(--ink)}
+.tech .av{cursor:pointer;outline:none}
+.tech .av:hover .bobg,.tech .av:focus-visible .bobg{filter:brightness(1.07)}
+.tech .av:focus-visible .selring{opacity:1}
+.tech .bobg{animation:bobav 6s ease-in-out infinite;animation-delay:var(--bd,0s)}
+@keyframes bobav{50%{transform:translateY(-5px)}}
+.tech .selring{fill:none;stroke:var(--cy);stroke-width:3;stroke-dasharray:5 6;opacity:0;transition:opacity .2s}
+.tech .av.on .selring{opacity:1}
+.tech .aura{animation:breathe 4.5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes breathe{50%{transform:scale(1.1);opacity:.75}}
+.chip[aria-pressed="true"]{animation:chippop .28s ease-out}
+@keyframes chippop{40%{transform:scale(1.12) rotate(-2deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+details.card{animation:rise .5s cubic-bezier(.2,.8,.2,1) backwards;animation-delay:calc(var(--i,0)*60ms)}
+.scrollbar{position:fixed;left:0;top:env(safe-area-inset-top,0px);height:4px;width:100%;transform-origin:left;transform:scaleX(0);background:var(--cy);z-index:50;pointer-events:none}
+.topbar svg path:first-of-type{transform-box:fill-box;transform-origin:center;animation:needle 7s ease-in-out infinite}
+@keyframes needle{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(18deg)}}
+
+@media (max-width:860px){.persona .pf{grid-template-columns:1fr;gap:20px}.hol .r{grid-template-columns:86px minmax(0,1fr) 26px}}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;padding-block:18px 40px}
+  .techwrap{max-width:400px}
+  .postit{position:static;display:inline-block;width:46%;margin:12px 2% 0;vertical-align:top;font-size:16px}
+  .postit b{font-size:22px}
+  .steps{grid-template-columns:1fr}
+  .sheet{padding:26px 16px 22px;box-shadow:5px 5px 0 var(--hb)}
+  .cols{grid-template-columns:1fr;gap:28px}
+  details.card>summary{grid-template-columns:84px minmax(0,1fr);padding-inline:6px}
+  .grade{width:84px;height:70px}.grade b{font-size:38px}
+  .prosp{grid-column:1/-1;text-align:left;display:flex;align-items:baseline;gap:10px}
+  .chev{margin:0 0 0 auto}
+  .body{padding-inline:14px}
+  .road li{grid-template-columns:40px minmax(0,1fr)}
+  .road b{padding-top:6px}.road span.d{grid-column:2}
+  .bar{grid-template-columns:86px minmax(0,1fr) 56px}
+  .hrow{grid-template-columns:28px minmax(0,1fr) 62px;row-gap:6px}
+  .hrow .tr{grid-column:2/-1;grid-row:2}
+  .topbar .hand{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+
+<div class="wrap">
+  <div class="scrollbar" id="sbar" aria-hidden="true"></div>
+  <div class="topbar">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13.5" fill="none" stroke="var(--ink)" stroke-width="2.4"/><path d="M16 5l4.2 11L16 27l-4.2-11z" fill="var(--pen)" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round"/><circle cx="16" cy="16" r="2" fill="var(--paper2)" stroke="var(--ink)" stroke-width="1.4"/></svg>
+    La Bàn Nghề Nghiệp <span class="hand">tuyển sinh 2026</span>
+  </div>
+
+  <header class="hero">
+    <div>
+      <h1>Chọn ngành theo điểm của bạn, tổ hợp của bạn và điều bạn thích</h1>
+      <p class="lead">Trả lời ba câu hỏi. La Bàn giữ lại những ngành khớp cả ba, cho điểm phù hợp, kèm số liệu đến 2030 và lộ trình từng bước. Hiện có 30 ngành, 35 tổ hợp xét tuyển, 33 sở thích và 15 năng khiếu để tự đánh giá.</p>
+      <div class="cta">
+        <button class="btn" type="button" id="cta1">Điền phiếu chọn ngành</button>
+        <button class="linkbtn" type="button" id="cta2">Xem ngành bứt phá</button>
+      </div>
+      <div class="together"><div class="pile"><svg viewBox="-34 -34 68 68" width="44" height="44" aria-hidden="true"><g transform="translate(0 0)"><clipPath id="fp0"><circle r="31"/></clipPath><circle r="31" fill="var(--hb)"/><g clip-path="url(#fp0)"><path d="M-24 34C-24 14 -13 8 0 8C13 8 24 14 24 34Z" fill="#5B6CFF" stroke="var(--ink)" stroke-width="2.2"/><circle cy="-6" r="11" fill="#F3C9A6" stroke="var(--ink)" stroke-width="2.2"/><path d="M-11 -8C-12 -21 12 -21 11 -8C7 -14 -7 -14 -11 -8Z" fill="#2B1E52" stroke="var(--ink)" stroke-width="2"/><path d="M-13 -9C-13 -23 13 -23 13 -9" fill="none" stroke="#0D1B52" stroke-width="3"/><rect x="-16" y="-9" width="5" height="9" rx="2" fill="#0D1B52"/><rect x="11" y="-9" width="5" height="9" rx="2" fill="#0D1B52"/></g><circle r="31" fill="none" stroke="var(--ink)" stroke-width="2.6"/></g></svg><svg viewBox="-34 -34 68 68" width="44" height="44" aria-hidden="true"><g transform="translate(0 0)"><clipPath id="fp1"><circle r="31"/></clipPath><circle r="31" fill="var(--hp)"/><g clip-path="url(#fp1)"><path d="M-24 34C-24 14 -13 8 0 8C13 8 24 14 24 34Z" fill="#FFFFFF" stroke="var(--ink)" stroke-width="2.2"/><circle cy="-6" r="11" fill="#D9A07A" stroke="var(--ink)" stroke-width="2.2"/><path d="M-11 -8C-12 -21 12 -21 11 -8C7 -14 -7 -14 -11 -8Z" fill="#1B1B1B" stroke="var(--ink)" stroke-width="2"/><path d="M-7 -17H7V-14H-7Z" fill="#fff" stroke="var(--ink)" stroke-width="1.6"/><path d="M0 -20V-12M-4 -16H4" stroke="#D63A31" stroke-width="2"/></g><circle r="31" fill="none" stroke="var(--ink)" stroke-width="2.6"/></g></svg><svg viewBox="-34 -34 68 68" width="44" height="44" aria-hidden="true"><g transform="translate(0 0)"><clipPath id="fp2"><circle r="31"/></clipPath><circle r="31" fill="var(--hg)"/><g clip-path="url(#fp2)"><path d="M-24 34C-24 14 -13 8 0 8C13 8 24 14 24 34Z" fill="#FF8A5B" stroke="var(--ink)" stroke-width="2.2"/><circle cy="-6" r="11" fill="#F8D7BE" stroke="var(--ink)" stroke-width="2.2"/><path d="M-11 -8C-12 -21 12 -21 11 -8C7 -14 -7 -14 -11 -8Z" fill="#7A3B1D" stroke="var(--ink)" stroke-width="2"/><circle cx="-5" cy="-6" r="3.6" fill="none" stroke="var(--ink)" stroke-width="1.6"/><circle cx="5" cy="-6" r="3.6" fill="none" stroke="var(--ink)" stroke-width="1.6"/><path d="M-1.4 -6H1.4" stroke="var(--ink)" stroke-width="1.6"/></g><circle r="31" fill="none" stroke="var(--ink)" stroke-width="2.6"/></g></svg><svg viewBox="-34 -34 68 68" width="44" height="44" aria-hidden="true"><g transform="translate(0 0)"><clipPath id="fp3"><circle r="31"/></clipPath><circle r="31" fill="var(--ho)"/><g clip-path="url(#fp3)"><path d="M-24 34C-24 14 -13 8 0 8C13 8 24 14 24 34Z" fill="#2E9E8B" stroke="var(--ink)" stroke-width="2.2"/><circle cy="-6" r="11" fill="#A8693F" stroke="var(--ink)" stroke-width="2.2"/><path d="M-13 -11C-13 -25 13 -25 13 -11Z" fill="#FFC933" stroke="var(--ink)" stroke-width="2"/><rect x="-16" y="-12" width="32" height="4" rx="2" fill="#FFC933" stroke="var(--ink)" stroke-width="1.8"/></g><circle r="31" fill="none" stroke="var(--ink)" stroke-width="2.6"/></g></svg><svg viewBox="-34 -34 68 68" width="44" height="44" aria-hidden="true"><g transform="translate(0 0)"><clipPath id="fp4"><circle r="31"/></clipPath><circle r="31" fill="var(--hv)"/><g clip-path="url(#fp4)"><path d="M-24 34C-24 14 -13 8 0 8C13 8 24 14 24 34Z" fill="#F5F7FF" stroke="var(--ink)" stroke-width="2.2"/><circle cy="-6" r="11" fill="#F3C9A6" stroke="var(--ink)" stroke-width="2.2"/><path d="M-11 -8C-12 -21 12 -21 11 -8C7 -14 -7 -14 -11 -8Z" fill="#4B2A7A" stroke="var(--ink)" stroke-width="2"/><path d="M-12 -8H12" stroke="#0D1B52" stroke-width="3.2"/><circle cx="-5" cy="-7" r="4" fill="#BFEFFF" stroke="var(--ink)" stroke-width="1.6"/><circle cx="5" cy="-7" r="4" fill="#BFEFFF" stroke="var(--ink)" stroke-width="1.6"/></g><circle r="31" fill="none" stroke="var(--ink)" stroke-width="2.6"/></g></svg></div><p>Chọn ngành là việc của cả nhà. Sao chép kết quả để cùng bàn với gia đình, thầy cô và bạn bè.</p></div>
+    </div>
+    <div class="herorhs"><div class="techwrap">
+      <svg class="tech" viewBox="0 0 480 420" role="img" aria-label="Con chip AI phát sáng ở giữa, nối bằng mạch điện tới sáu người làm nghề: lập trình viên, nhân viên y tế, giáo viên, kỹ sư, nhà khoa học và chuyên viên dữ liệu">
+        <defs><radialGradient id="aura"><stop offset="0" stop-color="var(--cy)" stop-opacity=".45"/><stop offset="1" stop-color="var(--cy)" stop-opacity="0"/></radialGradient></defs>
+        <circle class="aura" cx="240" cy="210" r="170" fill="url(#aura)"/>
+        <circle class="orbit" cx="240" cy="210" r="168"/><circle class="orbit" cx="240" cy="210" r="205" style="opacity:.18"/>
+        <path class="ln dr" pathLength="1" style="--d:.1s" d="M180 175H130V70H112"/><path class="ln dr" pathLength="1" style="--d:.25s" d="M300 175H350V70H368"/>
+        <path class="ln dr" pathLength="1" style="--d:.4s" d="M180 210H82"/><path class="ln dr" pathLength="1" style="--d:.55s" d="M300 210H398"/>
+        <path class="ln dr" pathLength="1" style="--d:.7s" d="M180 245H130V350H116"/><path class="ln dr" pathLength="1" style="--d:.85s" d="M300 245H350V350H364"/>
+        <path class="pulse" pathLength="100" style="--d:.1s" d="M180 175H130V70H112"/><path class="pulse" pathLength="100" style="--d:1.2s" d="M300 175H350V70H368"/>
+        <path class="pulse" pathLength="100" style="--d:2.3s" d="M180 210H82"/><path class="pulse" pathLength="100" style="--d:.7s" d="M300 210H398"/>
+        <path class="pulse" pathLength="100" style="--d:1.8s" d="M180 245H130V350H116"/><path class="pulse" pathLength="100" style="--d:2.7s" d="M300 245H350V350H364"/>
+        <line class="pin" x1="196" y1="141" x2="286" y2="141"/><line class="pin" x1="196" y1="279" x2="286" y2="279"/>
+        <line class="pin" x1="171" y1="166" x2="171" y2="254"/><line class="pin" x1="309" y1="166" x2="309" y2="254"/>
+        <path class="chipbody dr" pathLength="1" style="--d:0s" d="M196 150H284Q300 150 300 166V254Q300 270 284 270H196Q180 270 180 254V166Q180 150 196 150Z"/>
+        <path d="M194 164H286M194 256H286M194 164V256M286 164V256" fill="none" stroke="var(--cy)" stroke-width="1.2" opacity=".45"/>
+        <text class="chipt" x="240" y="226" text-anchor="middle" font-size="54">AI</text>
+        <text x="240" y="252" text-anchor="middle" font-size="19" style="font-family:var(--font-hand);fill:#9FD9FF">2030</text>
+        <g transform="translate(80 70)"><clipPath id="av0"><circle r="31"/></clipPath><circle r="31" fill="var(--hb)"/><g clip-path="url(#av0)"><path d="M-24 34C-24 14 -13 8 0 8C13 8 24 14 24 34Z" fill="#5B6CFF" stroke="var(--ink)" stroke-width="2.2"/><circle cy="-6" r="11" fill="#F3C9A6" stroke="var(--ink)" stroke-width="2.2"/><path d="M-11 -8C-12 -21 12 -21 11 -8C7 -14 -7 -14 -11 -8Z" fill="#2B1E52" stroke="var(--ink)" stroke-width="2"/><path d="M-13 -9C-13 -23 13 -23 13 -9" fill="none" stroke="#0D1B52" stroke-width="3"/><rect x="-16" y="-9" width="5" height="9" rx="2" fill="#0D1B52"/><rect x="11" y="-9" width="5" height="9" rx="2" fill="#0D1B52"/></g><circle r="31" fill="none" stroke="var(--ink)" stroke-width="2.6"/><g transform="translate(22 22)"><circle r="9.5" fill="var(--paper2)" stroke="var(--ink)" stroke-width="2"/><text y="4" text-anchor="middle" font-size="11" font-weight="800" fill="var(--ink)" font-family="Lexend,system-ui,sans-serif">{}</text></g></g><g transform="translate(400 70)"><clipPath id="av1"><circle r="31"/></clipPath><circle r="31" fill="var(--hp)"/><g clip-path="url(#av1)"><path d="M-24 34C-24 14 -13 8 0 8C13 8 24 14 24 34Z" fill="#FFFFFF" stroke="var(--ink)" stroke-width="2.2"/><circle cy="-6" r="11" fill="#D9A07A" stroke="var(--ink)" stroke-width="2.2"/><path d="M-11 -8C-12 -21 12 -21 11 -8C7 -14 -7 -14 -11 -8Z" fill="#1B1B1B" stroke="var(--ink)" stroke-width="2"/><path d="M-7 -17H7V-14H-7Z" fill="#fff" stroke="var(--ink)" stroke-width="1.6"/><path d="M0 -20V-12M-4 -16H4" stroke="#D63A31" stroke-width="2"/></g><circle r="31" fill="none" stroke="var(--ink)" stroke-width="2.6"/><g transform="translate(22 22)"><circle r="9.5" fill="var(--paper2)" stroke="var(--ink)" stroke-width="2"/><text y="4" text-anchor="middle" font-size="11" font-weight="800" fill="var(--ink)" font-family="Lexend,system-ui,sans-serif">+</text></g></g><g transform="translate(50 210)"><clipPath id="av2"><circle r="31"/></clipPath><circle r="31" fill="var(--hg)"/><g clip-path="url(#av2)"><path d="M-24 34C-24 14 -13 8 0 8C13 8 24 14 24 34Z" fill="#FF8A5B" stroke="var(--ink)" stroke-width="2.2"/><circle cy="-6" r="11" fill="#F8D7BE" stroke="var(--ink)" stroke-width="2.2"/><path d="M-11 -8C-12 -21 12 -21 11 -8C7 -14 -7 -14 -11 -8Z" fill="#7A3B1D" stroke="var(--ink)" stroke-width="2"/><circle cx="-5" cy="-6" r="3.6" fill="none" stroke="var(--ink)" stroke-width="1.6"/><circle cx="5" cy="-6" r="3.6" fill="none" stroke="var(--ink)" stroke-width="1.6"/><path d="M-1.4 -6H1.4" stroke="var(--ink)" stroke-width="1.6"/></g><circle r="31" fill="none" stroke="var(--ink)" stroke-width="2.6"/><g transform="translate(22 22)"><circle r="9.5" fill="var(--paper2)" stroke="var(--ink)" stroke-width="2"/><text y="4" text-anchor="middle" font-size="11" font-weight="800" fill="var(--ink)" font-family="Lexend,system-ui,sans-serif">A</text></g></g><g transform="translate(430 210)"><clipPath id="av3"><circle r="31"/></clipPath><circle r="31" fill="var(--ho)"/><g clip-path="url(#av3)"><path d="M-24 34C-24 14 -13 8 0 8C13 8 24 14 24 34Z" fill="#2E9E8B" stroke="var(--ink)" stroke-width="2.2"/><circle cy="-6" r="11" fill="#A8693F" stroke="var(--ink)" stroke-width="2.2"/><path d="M-13 -11C-13 -25 13 -25 13 -11Z" fill="#FFC933" stroke="var(--ink)" stroke-width="2"/><rect x="-16" y="-12" width="32" height="4" rx="2" fill="#FFC933" stroke="var(--ink)" stroke-width="1.8"/></g><circle r="31" fill="none" stroke="var(--ink)" stroke-width="2.6"/><g transform="translate(22 22)"><circle r="9.5" fill="var(--paper2)" stroke="var(--ink)" stroke-width="2"/><text y="4" text-anchor="middle" font-size="11" font-weight="800" fill="var(--ink)" font-family="Lexend,system-ui,sans-serif">⚙</text></g></g><g transform="translate(90 350)"><clipPath id="av4"><circle r="31"/></clipPath><circle r="31" fill="var(--hv)"/><g clip-path="url(#av4)"><path d="M-24 34C-24 14 -13 8 0 8C13 8 24 14 24 34Z" fill="#F5F7FF" stroke="var(--ink)" stroke-width="2.2"/><circle cy="-6" r="11" fill="#F3C9A6" stroke="var(--ink)" stroke-width="2.2"/><path d="M-11 -8C-12 -21 12 -21 11 -8C7 -14 -7 -14 -11 -8Z" fill="#4B2A7A" stroke="var(--ink)" stroke-width="2"/><path d="M-12 -8H12" stroke="#0D1B52" stroke-width="3.2"/><circle cx="-5" cy="-7" r="4" fill="#BFEFFF" stroke="var(--ink)" stroke-width="1.6"/><circle cx="5" cy="-7" r="4" fill="#BFEFFF" stroke="var(--ink)" stroke-width="1.6"/></g><circle r="31" fill="none" stroke="var(--ink)" stroke-width="2.6"/><g transform="translate(22 22)"><circle r="9.5" fill="var(--paper2)" stroke="var(--ink)" stroke-width="2"/><text y="4" text-anchor="middle" font-size="11" font-weight="800" fill="var(--ink)" font-family="Lexend,system-ui,sans-serif">Ω</text></g></g><g transform="translate(390 350)"><clipPath id="av5"><circle r="31"/></clipPath><circle r="31" fill="var(--hy)"/><g clip-path="url(#av5)"><path d="M-24 34C-24 14 -13 8 0 8C13 8 24 14 24 34Z" fill="#3B4CCA" stroke="var(--ink)" stroke-width="2.2"/><circle cy="-6" r="11" fill="#E2B08A" stroke="var(--ink)" stroke-width="2.2"/><path d="M-11 -8C-12 -21 12 -21 11 -8C7 -14 -7 -14 -11 -8Z" fill="#1B1B1B" stroke="var(--ink)" stroke-width="2"/><path d="M-3 8L0 15L3 8Z" fill="#fff" stroke="var(--ink)" stroke-width="1.4"/></g><circle r="31" fill="none" stroke="var(--ink)" stroke-width="2.6"/><g transform="translate(22 22)"><circle r="9.5" fill="var(--paper2)" stroke="var(--ink)" stroke-width="2"/><text y="4" text-anchor="middle" font-size="11" font-weight="800" fill="var(--ink)" font-family="Lexend,system-ui,sans-serif">%</text></g></g><text class="lab" x="80" y="124">lập trình</text><text class="lab" x="400" y="124">y tế</text><text class="lab" x="50" y="266">giáo dục</text><text class="lab" x="430" y="266">kỹ thuật</text><text class="lab" x="90" y="406">khoa học</text><text class="lab" x="390" y="406">dữ liệu</text>
+      </svg>
+      <div class="postit a">Bán dẫn<b>+22%/năm</b></div>
+      <div class="postit b">AI và dữ liệu<b>+25%/năm</b></div>
+    </div>
+    <p class="avinfo" id="avinfo" aria-live="polite">Chạm vào một nhân vật để xem ngành nghề của họ.</p>
+    </div>
+  </header>
+
+  <svg class="cd" aria-hidden="true" height="30"><defs><pattern id="cp" width="260" height="30" patternUnits="userSpaceOnUse"><path d="M0 15H70L84 5H150L164 25H210L222 15H260" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="84" cy="5" r="3.6" fill="var(--paper)" stroke="var(--cy)" stroke-width="2"/><circle cx="164" cy="25" r="3.6" fill="var(--paper)" stroke="var(--cy)" stroke-width="2"/><circle cx="222" cy="15" r="3.6" fill="var(--cy)"/></pattern></defs><rect width="100%" height="30" fill="url(#cp)"/></svg>
+  <section id="hotsec">
+    <div class="sec-h"><h2>Ngành bứt phá đến 2030</h2><p>Tám ngành có chỉ số triển vọng cao nhất, tính từ tăng trưởng nhu cầu, thu nhập, mức thiếu hụt nhân lực và khả năng chống bị AI thay thế.</p></div>
+    <div class="hot" id="hot"></div>
+  </section>
+
+  <section class="sheet" id="start" aria-label="Phiếu chọn ngành">
+    <div class="sheet-h"><h2>Phiếu chọn ngành</h2><div class="prog"><span>đã điền <span id="pn">0</span>/3</span><div class="trk"><div class="fill" id="pf"></div></div></div></div>
+    <div class="sheet-body"><div class="steps">
+      <div class="step">
+        <div class="step-h"><span class="n">1.</span><h3>Học lực</h3></div>
+        <p class="hint">Chọn mức học lực trung bình lớp 12, hoặc mức bạn dự kiến.</p>
+        <div class="levels" id="levels"></div>
+        <label class="score" for="score">Tổng điểm dự kiến 3 môn (thang 30), không bắt buộc
+          <input id="score" type="number" min="0" max="30" step="0.25" inputmode="decimal" placeholder="VD: 24">
+        </label>
+      </div>
+      <div class="step">
+        <div class="step-h"><span class="n">2.</span><h3>Tổ hợp xét tuyển</h3></div>
+        <p class="hint">Chọn một hoặc nhiều tổ hợp bạn có thể thi hoặc xét. Ngành năng khiếu dùng tổ hợp N00, N01, S00, T00 hoặc T05; mã cụ thể thay đổi theo trường, hãy đối chiếu đề án.</p>
+        <div class="chips" id="combos"></div>
+      </div>
+      <div class="step full">
+        <div class="step-h"><span class="n">3.</span><h3>Sở thích cá nhân</h3></div>
+        <p class="hint">Chọn từ 1 đến 5 điều bạn thích làm nhất. Đã chọn <b id="tc">0</b>/5</p>
+        <div class="catgrid" id="tags"></div>
+      </div>
+      <div class="step full">
+        <div class="step-h"><span class="n">4.</span><h3>Trắc nghiệm nhanh: tính cách và kỹ năng</h3></div>
+        <p class="hint">Tùy chọn, khoảng 3 phút. Trả lời đủ 19 câu để La Bàn tính thêm độ hợp tính cách và chỉ ra kỹ năng cần bù đắp. <b id="qn">0</b>/19 <span class="hand" id="qcode"></span></p>
+        <details class="quiz" id="quizbox"><summary>Làm trắc nghiệm</summary><div id="quiz"></div></details>
+      </div>
+      <div class="step full">
+        <div class="step-h"><span class="n">5.</span><h3>Năng khiếu: hát, nhảy, vẽ, viết, thể thao...</h3></div>
+        <p class="hint">Tùy chọn. 15 năng khiếu, mỗi năng khiếu 3 câu: bạn thích đến đâu, làm được đến đâu và đã từng thử sức chưa. Chỉ cần làm những năng khiếu bạn quan tâm. Đã đánh giá <b id="tn">0</b>/15 <span class="hand" id="tcode"></span></p>
+        <details class="quiz" id="talentbox"><summary>Làm bài năng khiếu</summary><div id="talent"></div></details>
+        <div id="tprof"></div>
+      </div>
+    </div>
+    <aside class="summary" aria-label="Phiếu của bạn">
+      <h4>Phiếu của bạn</h4>
+      <dl id="sumlist"></dl>
+      <p class="cnt" id="sumcount"></p>
+    </aside></div>
+    <div class="actions">
+      <button class="btn" id="go" type="button">Chấm điểm phù hợp</button>
+      <button class="btn ghost" id="reset" type="button">Xóa phiếu</button>
+      <span class="err" id="err" role="alert"></span>
+    </div>
+  </section>
+
+  <section id="results" aria-live="polite"></section>
+
+  <section id="social">
+    <div class="sec-h"><h2>Nghề vì cộng đồng</h2><p>Giáo viên, điều dưỡng, luật sư, nhân viên công tác xã hội, chuyên viên môi trường. Thu nhập khởi điểm thường thấp hơn nhóm công nghệ, nhưng nhu cầu ổn định, ít bị AI thay thế và có ý nghĩa rõ ràng.</p></div>
+    <div class="photo">
+      <svg class="soc" viewBox="0 0 960 360" role="img" aria-label="Minh họa các nghề vì cộng đồng: giáo viên, điều dưỡng, luật sư, nhân viên công tác xã hội và chuyên viên môi trường làm việc quanh trường học, bệnh viện, tòa án và nhà văn hóa">
+<defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B2380"/><stop offset=".55" stop-color="#B0479A"/><stop offset="1" stop-color="#FF9A6B"/></linearGradient>
+<radialGradient id="sun"><stop offset="0" stop-color="#FFE3A0"/><stop offset="1" stop-color="#FFB46B" stop-opacity="0"/></radialGradient></defs>
+<rect width="960" height="360" fill="url(#sk)"/><circle class="star" cx="60" cy="40" r="1.8" style="animation-delay:-0s"/><circle class="star" cx="180" cy="70" r="1.4" style="animation-delay:-1s"/><circle class="star" cx="300" cy="30" r="2" style="animation-delay:-2s"/><circle class="star" cx="420" cy="60" r="1.5" style="animation-delay:-3s"/><circle class="star" cx="560" cy="28" r="1.8" style="animation-delay:-0s"/><circle class="star" cx="700" cy="64" r="1.4" style="animation-delay:-1s"/><circle class="star" cx="820" cy="36" r="2" style="animation-delay:-2s"/><circle class="star" cx="900" cy="80" r="1.6" style="animation-delay:-3s"/><circle class="star" cx="120" cy="110" r="1.3" style="animation-delay:-0s"/><circle class="star" cx="760" cy="110" r="1.5" style="animation-delay:-1s"/>
+<circle cx="480" cy="235" r="150" fill="url(#sun)" opacity=".75"/>
+<g class="rays" stroke="#FFD27A" stroke-width="3" opacity=".5"><line x1="480" y1="235" x2="650" y2="235"/><line x1="480" y1="235" x2="627" y2="320"/><line x1="480" y1="235" x2="565" y2="382"/><line x1="480" y1="235" x2="480" y2="405"/><line x1="480" y1="235" x2="395" y2="382"/><line x1="480" y1="235" x2="333" y2="320"/><line x1="480" y1="235" x2="310" y2="235"/><line x1="480" y1="235" x2="333" y2="150"/><line x1="480" y1="235" x2="395" y2="88"/><line x1="480" y1="235" x2="480" y2="65"/><line x1="480" y1="235" x2="565" y2="88"/><line x1="480" y1="235" x2="627" y2="150"/></g>
+<circle cx="480" cy="235" r="46" fill="#FFD27A"/>
+<ellipse class="cloud" cx="0" cy="90" rx="70" ry="14"/><ellipse class="cloud c2" cx="0" cy="140" rx="50" ry="10"/>
+<path d="M0 262Q120 222 240 256T480 250T720 244T960 256V360H0Z" fill="#2A2478" opacity=".85"/>
+<!-- trường học -->
+<rect x="60" y="170" width="170" height="100" fill="#1D1858"/><path d="M48 172L145 120L242 172Z" fill="#2E2780"/><path d="M145 120V92" stroke="#fff" stroke-width="2"/><path d="M145 92L170 100L145 108Z" fill="#FF7AA8"/><rect x="127" y="226" width="36" height="44" rx="3" fill="#2E2780"/><rect class="win" x="80" y="190" width="14" height="18" rx="2" style="animation-delay:-0s"/><rect class="win" x="115" y="190" width="14" height="18" rx="2" style="animation-delay:-0s"/><rect class="win" x="150" y="190" width="14" height="18" rx="2" style="animation-delay:-0s"/><rect class="win" x="185" y="190" width="14" height="18" rx="2" style="animation-delay:-0s"/><rect class="win" x="80" y="225" width="14" height="18" rx="2" style="animation-delay:-0s"/><rect class="win" x="185" y="225" width="14" height="18" rx="2" style="animation-delay:-0s"/><rect class="win" x="300" y="160" width="14" height="14" rx="2" style="animation-delay:-0s"/><rect class="win" x="300" y="200" width="14" height="14" rx="2" style="animation-delay:-0s"/><rect class="win" x="300" y="235" width="14" height="14" rx="2" style="animation-delay:-0s"/><rect class="win" x="330" y="160" width="14" height="14" rx="2" style="animation-delay:-0s"/><rect class="win" x="330" y="200" width="14" height="14" rx="2" style="animation-delay:-0s"/><rect class="win" x="330" y="235" width="14" height="14" rx="2" style="animation-delay:-0s"/><rect class="win" x="400" y="160" width="14" height="14" rx="2" style="animation-delay:-0s"/><rect class="win" x="400" y="200" width="14" height="14" rx="2" style="animation-delay:-0s"/><rect class="win" x="400" y="235" width="14" height="14" rx="2" style="animation-delay:-0s"/><rect class="win" x="430" y="160" width="14" height="14" rx="2" style="animation-delay:-0s"/><rect class="win" x="430" y="200" width="14" height="14" rx="2" style="animation-delay:-0s"/><rect class="win" x="430" y="235" width="14" height="14" rx="2" style="animation-delay:-0s"/>
+<!-- bệnh viện -->
+<rect x="280" y="140" width="170" height="130" fill="#1D1858"/><rect x="332" y="104" width="66" height="40" fill="#2E2780"/><rect x="361" y="112" width="8" height="24" rx="2" fill="#FF7AA8"/><rect x="353" y="120" width="24" height="8" rx="2" fill="#FF7AA8"/>
+<!-- tòa án -->
+<path d="M492 180L590 132L688 180Z" fill="#2E2780"/><rect x="496" y="256" width="188" height="14" rx="2" fill="#2E2780"/><rect x="510" y="178" width="14" height="78" rx="2" fill="#2E2780"/><rect x="546" y="178" width="14" height="78" rx="2" fill="#2E2780"/><rect x="582" y="178" width="14" height="78" rx="2" fill="#2E2780"/><rect x="618" y="178" width="14" height="78" rx="2" fill="#2E2780"/><rect x="654" y="178" width="14" height="78" rx="2" fill="#2E2780"/>
+<!-- nhà văn hóa cộng đồng -->
+<rect x="730" y="204" width="110" height="66" fill="#1D1858"/><path d="M716 206L785 158L854 206Z" fill="#2E2780"/><rect x="772" y="232" width="26" height="38" rx="3" fill="#FFD27A"/>
+<!-- cây -->
+<rect x="886" y="236" width="8" height="34" fill="#17123F"/><circle cx="890" cy="222" r="30" fill="#2D8F7A"/><circle cx="924" cy="244" r="22" fill="#3CC2B4"/><rect x="920" y="252" width="6" height="20" fill="#17123F"/>
+<rect y="268" width="960" height="92" fill="#130F3F"/><path d="M0 270H960" stroke="#3A3390" stroke-width="2"/>
+<g transform="translate(145 232)"><g class="bub0" style="animation-delay:0s"><circle r="25" fill="rgba(14,10,60,.72)" stroke="#8FA0FF" stroke-width="2"/><g fill="#8FA0FF" stroke="#8FA0FF"><rect x="-11" y="-8" width="10" height="16" rx="1.5" stroke="none"/><rect x="1" y="-8" width="10" height="16" rx="1.5" stroke="none"/></g></g></g><g transform="translate(365 232)"><g class="bub0" style="animation-delay:-1s"><circle r="25" fill="rgba(14,10,60,.72)" stroke="#FF7AA8" stroke-width="2"/><g fill="#FF7AA8" stroke="#FF7AA8"><rect x="-3.5" y="-11" width="7" height="22" rx="1.5" stroke="none"/><rect x="-11" y="-3.5" width="22" height="7" rx="1.5" stroke="none"/></g></g></g><g transform="translate(590 232)"><g class="bub0" style="animation-delay:-2s"><circle r="25" fill="rgba(14,10,60,.72)" stroke="#F0BC3A" stroke-width="2"/><g fill="#F0BC3A" stroke="#F0BC3A"><path d="M0 -11V10M-10 -7H10M-4 10H4" fill="none" stroke-width="2.2" stroke-linecap="round"/><path d="M-10 -7L-14 3H-6ZM10 -7L6 3H14Z" stroke="none"/></g></g></g><g transform="translate(785 232)"><g class="bub0" style="animation-delay:-3s"><circle r="25" fill="rgba(14,10,60,.72)" stroke="#FF7A7A" stroke-width="2"/><g fill="#FF7A7A" stroke="#FF7A7A"><path class="hrt" d="M0 9C-15 -2 -9 -13 0 -5C9 -13 15 -2 0 9Z" stroke="none"/></g></g></g><g transform="translate(905 232)"><g class="bub0" style="animation-delay:-1.5s"><circle r="25" fill="rgba(14,10,60,.72)" stroke="#7BE0A0" stroke-width="2"/><g fill="#7BE0A0" stroke="#7BE0A0"><path d="M-9 8C-9 -6 2 -10 10 -9C10 2 6 10 -9 8Z" stroke="none"/><path d="M-9 8L4 -3" fill="none" stroke="#1A1647" stroke-width="1.6"/></g></g></g>
+<g transform="translate(145 352)"><g class="pp0" style="animation-delay:0s"><ellipse cy="2" rx="22" ry="5" fill="#000" opacity=".25"/><rect x="-16" y="-44" width="32" height="46" rx="14" fill="#8FA0FF"/><circle cy="-58" r="12" fill="#F3C9A6"/><path d="M-12 -62C-10 -74 10 -74 12 -62C6 -67 -6 -67 -12 -62Z" fill="#2B1E52"/></g></g><g transform="translate(365 352)"><g class="pp0" style="animation-delay:-1s"><ellipse cy="2" rx="22" ry="5" fill="#000" opacity=".25"/><rect x="-16" y="-44" width="32" height="46" rx="14" fill="#FF7AA8"/><circle cy="-58" r="12" fill="#F3C9A6"/><path d="M-12 -62C-10 -74 10 -74 12 -62C6 -67 -6 -67 -12 -62Z" fill="#2B1E52"/></g></g><g transform="translate(590 352)"><g class="pp0" style="animation-delay:-2s"><ellipse cy="2" rx="22" ry="5" fill="#000" opacity=".25"/><rect x="-16" y="-44" width="32" height="46" rx="14" fill="#F0BC3A"/><circle cy="-58" r="12" fill="#F3C9A6"/><path d="M-12 -62C-10 -74 10 -74 12 -62C6 -67 -6 -67 -12 -62Z" fill="#2B1E52"/></g></g><g transform="translate(785 352)"><g class="pp0" style="animation-delay:-3s"><ellipse cy="2" rx="22" ry="5" fill="#000" opacity=".25"/><rect x="-16" y="-44" width="32" height="46" rx="14" fill="#3CC2B4"/><circle cy="-58" r="12" fill="#F3C9A6"/><path d="M-12 -62C-10 -74 10 -74 12 -62C6 -67 -6 -67 -12 -62Z" fill="#2B1E52"/></g></g><g transform="translate(905 352)"><g class="pp0" style="animation-delay:-1.5s"><ellipse cy="2" rx="22" ry="5" fill="#000" opacity=".25"/><rect x="-16" y="-44" width="32" height="46" rx="14" fill="#7BE0A0"/><circle cy="-58" r="12" fill="#F3C9A6"/><path d="M-12 -62C-10 -74 10 -74 12 -62C6 -67 -6 -67 -12 -62Z" fill="#2B1E52"/></g></g>
+<circle class="star" cx="40" cy="300" r="1.6"/><circle class="star" cx="940" cy="310" r="1.6" style="animation-delay:-2s"/>
+</svg>
+    </div>
+    <p class="cap hand">những người giữ cho trường học, bệnh viện, tòa án và khu phố chạy đều</p>
+    <div class="notes" id="soccards"></div>
+  </section>
+
+  <footer class="foot">
+    <p><b>Về số liệu.</b> Mức lương (triệu đồng/tháng, trước thuế, khu vực thành phố lớn), tốc độ tăng nhu cầu nhân lực và quy mô thiếu hụt là ước tính tổng hợp để so sánh các ngành với nhau, dựa trên định hướng chính sách và xu hướng tuyển dụng đến 2030. Hai mốc có nguồn công bố: Chiến lược phát triển công nghiệp bán dẫn Việt Nam đặt mục tiêu 50.000 kỹ sư bán dẫn vào năm 2030, và ngành công nghệ số cần khoảng 1 triệu nhân lực vào năm 2030 theo định hướng của Bộ quản lý ngành.</p>
+    <p><b>Chỉ số triển vọng 0–100</b> = 30% tốc độ tăng nhu cầu + 25% thu nhập sau 3–5 năm + 20% quy mô thiếu hụt nhân lực + 25% khả năng chống bị AI thay thế. <b>Điểm phù hợp</b> (thang 10) = 55% sở thích + 25% tổ hợp + 20% học lực; khi bạn làm trắc nghiệm: 40% sở thích + 20% tổ hợp + 15% học lực + 25% tính cách và kỹ năng. Khi bạn đánh giá năng khiếu ở bước 5, điểm phù hợp lấy 85% theo công thức trên và 15% theo mức năng khiếu liên quan đến ngành (30% mức thích, 45% năng lực thực tế, 25% trải nghiệm). Câu hỏi năng khiếu là tự đánh giá, không thay thế buổi thi năng khiếu hoặc nhận xét của giáo viên chuyên môn. Mô hình Holland có cơ sở nghiên cứu; MBTI chỉ được dùng một chiều hướng ngoại/hướng nội và chỉ mang tính tham khảo. Trắc nghiệm không thay thế tư vấn trực tiếp. Điểm chuẩn là khoảng tham khảo của các trường nhóm đầu và nhóm giữa, thay đổi theo năm và theo trường. Hãy đối chiếu đề án tuyển sinh chính thức của từng trường trước khi đăng ký.</p>
+  </footer>
+</div>
+
+<script>
+const LV=[
+ {id:1,n:'Trung bình',r:'Điểm TB 5.0–6.4'},
+ {id:2,n:'Khá',r:'Điểm TB 6.5–7.9'},
+ {id:3,n:'Giỏi',r:'Điểm TB 8.0–8.9'},
+ {id:4,n:'Xuất sắc',r:'Điểm TB từ 9.0'}];
+const CB={A00:'Toán, Lý, Hóa',A01:'Toán, Lý, Anh',A02:'Toán, Lý, Sinh',A08:'Toán, Sử, GDKT&PL',A09:'Toán, Địa, GDKT&PL',A10:'Toán, Lý, GDKT&PL',A11:'Toán, Hóa, GDKT&PL',B00:'Toán, Hóa, Sinh',B04:'Toán, Sinh, GDKT&PL',C00:'Văn, Sử, Địa',C01:'Văn, Toán, Lý',C14:'Văn, Toán, GDKT&PL',C16:'Văn, Lý, GDKT&PL',C17:'Văn, Hóa, GDKT&PL',C19:'Văn, Sử, GDKT&PL',C20:'Văn, Địa, GDKT&PL',D01:'Toán, Văn, Anh',D07:'Toán, Hóa, Anh',D08:'Toán, Sinh, Anh',D10:'Toán, Địa, Anh',D14:'Văn, Sử, Anh',D66:'Văn, GDKT&PL, Anh',D68:'Văn, GDKT&PL, Nga',D69:'Văn, GDKT&PL, Nhật',D70:'Văn, GDKT&PL, Pháp',D84:'Toán, GDKT&PL, Anh',X06:'Toán, Lý, Tin',X26:'Toán, Tin, Anh',V00:'Toán, Lý, Vẽ',H00:'Văn, Vẽ 1, Vẽ 2',N00:'Văn, NK Âm nhạc 1, NK Âm nhạc 2',N01:'Văn, Xướng âm, Nhạc cụ hoặc hát',S00:'Văn, NK Sân khấu – Điện ảnh 1, 2',T00:'Toán, Sinh, NK TDTT',T05:'Văn, GDKT&PL, Năng khiếu TDTT'};
+const TG={cn:'Công nghệ & máy tính',lt:'Lập trình & viết code',ai:'Trí tuệ nhân tạo & robot',gm:'Game & giải trí số',bm:'Bảo mật & an toàn mạng',dt:'Điện tử & vi mạch',
+kt:'Kỹ thuật & chế tạo',ck:'Máy móc & ô tô',nl:'Năng lượng & điện',xd:'Xây dựng & kiến trúc',nc:'Nghiên cứu khoa học',hh:'Hóa học & thí nghiệm',so:'Toán & số liệu',
+yt:'Sức khỏe & chăm sóc',sh:'Sinh học & đời sống',tn:'Thiên nhiên & môi trường',nn:'Nông nghiệp & thực phẩm',
+kd:'Kinh doanh & quản lý',tc:'Đầu tư & tài chính',kn:'Khởi nghiệp',ld:'Tổ chức & lãnh đạo',gt:'Giao tiếp & ngoại ngữ',xh:'Con người & xã hội',gd:'Dạy học & hướng dẫn',ph:'Pháp luật & tranh biện',du:'Du lịch & khám phá',dl:'Dịch vụ & tiếp đón',
+st:'Sáng tạo & thiết kế',ve:'Vẽ & mỹ thuật',vd:'Quay dựng video',vh:'Viết lách & kể chuyện',am:'Âm nhạc & biểu diễn',tt:'Thể thao & vận động'};
+const TGC=[['Công nghệ & số','--g1','cn lt ai gm bm dt'],['Kỹ thuật & khoa học','--g2','kt ck nl xd nc hh so'],['Sức khỏe & thiên nhiên','--g4','yt sh tn nn tt'],['Kinh doanh & xã hội','--g3','kd tc kn ld gt xh gd ph du dl'],['Sáng tạo','--g5','st ve vd vh am']];
+const PH=['Lớp 10–12','Năm 1–2 đại học','Năm 3–4 đại học','0–2 năm đi làm','3–5 năm đi làm'];
+// M(tên, nhóm, tổ hợp, học lực tối thiểu, điểm chuẩn [thấp,cao], sở thích, lương [mới ra trường,3-5 năm,senior], tăng trưởng %/năm, thiếu hụt nghìn người/năm, chống AI 1-10, giới thiệu, nghề, trường, kỹ năng, lộ trình[5])
+const M=(n,g,c,l,s,t,w,gr,d,ai,p,j,u,k,r)=>({n,g,c:c.split(' '),l,s,t:t.split(' '),w,gr,d,ai,p,j,u,k,r});
+const DATA=[
+M('Kỹ thuật phần mềm / Công nghệ thông tin','Công nghệ số','A00 A01 D01 X06 X26 A10 D84',2,[22,28],'cn so lt gm ai',[12,28,60],12,150,6,
+ 'Nền của kinh tế số. Nhu cầu lớn nhất ở lập trình, kiểm thử, DevOps và cloud; AI giúp viết code nhanh hơn nên nhà tuyển dụng đòi hỏi tư duy hệ thống và thiết kế giải pháp ở mức cao hơn trước.',
+ 'Lập trình viên, kỹ sư DevOps/Cloud, kiểm thử tự động, kỹ sư giải pháp, product engineer','ĐH Bách khoa Hà Nội, ĐH Công nghệ (ĐHQGHN), ĐH CNTT (ĐHQG-HCM), ĐH FPT, PTIT','Giải thuật, một ngôn ngữ chính (Java/Python/C#/JS), SQL, Git, tiếng Anh kỹ thuật',
+ ['Học chắc Toán và Tin, làm quen Python hoặc C++ qua các bài tập nhỏ; luyện tiếng Anh đạt IELTS 5.5 hoặc tương đương.','Học cấu trúc dữ liệu, giải thuật, cơ sở dữ liệu; làm 2–3 dự án cá nhân đưa lên GitHub; thi lập trình thi đấu hoặc tham gia CLB công nghệ.','Chọn hướng (web, mobile, cloud, backend); thực tập 3–6 tháng tại công ty; lấy chứng chỉ AWS/Azure cơ bản; làm đồ án tốt nghiệp có sản phẩm chạy thật.','Vào vai trò Junior; học code review, kiểm thử, CI/CD; mục tiêu mức lương 12–16 triệu và hoàn thành 1–2 dự án production.','Lên Middle/Senior, đạt 25–35 triệu; chọn nhánh chuyên gia kỹ thuật (architect) hoặc quản lý (tech lead); cân nhắc làm cho công ty nước ngoài hoặc remote.']),
+M('Trí tuệ nhân tạo & Khoa học dữ liệu','Công nghệ số','A00 A01 D01 X06 X26 A10 D84',3,[24,29],'cn so nc ai lt',[15,35,80],25,40,8,
+ 'Nhóm ngành tăng nhanh nhất trong khối công nghệ. Doanh nghiệp tài chính, bán lẻ, y tế, sản xuất đều thiếu người xây mô hình và làm sạch dữ liệu. Cần nền Toán xác suất, thống kê và đại số tuyến tính vững.',
+ 'Kỹ sư AI/ML, nhà khoa học dữ liệu, kỹ sư dữ liệu, chuyên viên phân tích, kỹ sư MLOps','ĐH Bách khoa Hà Nội, ĐH KHTN (ĐHQGHN), ĐH Công nghệ (ĐHQGHN), ĐH Bách khoa TP.HCM, ĐH KHTN TP.HCM','Python, thống kê, đại số tuyến tính, machine learning, SQL, trực quan hóa dữ liệu',
+ ['Đào sâu Toán (hàm số, xác suất, tổ hợp), học Python; thử làm một bài phân tích dữ liệu thực tế bằng bảng tính hoặc Python.','Học giải tích, xác suất thống kê, đại số tuyến tính; hoàn thành khóa Machine Learning cơ bản; làm bài Kaggle đầu tiên.','Chuyên sâu một mảng (thị giác máy tính, xử lý ngôn ngữ, dữ liệu lớn); thực tập tại đơn vị có dữ liệu thật; nghiên cứu khoa học cùng giảng viên.','Vào vị trí Data Analyst hoặc Junior ML Engineer; học triển khai mô hình lên production; tích lũy portfolio 3 dự án.','Lên Data Scientist/ML Engineer 30–45 triệu; cân nhắc học thạc sĩ ở nước ngoài hoặc dẫn dắt nhóm dữ liệu.']),
+M('An toàn thông tin / An ninh mạng','Công nghệ số','A00 A01 D01 X06 A10 D84',2,[22,27],'cn so bm lt',[13,30,70],18,30,8,
+ 'Mỗi vụ rò rỉ dữ liệu làm tăng nhu cầu nhân lực bảo mật ở ngân hàng, viễn thông và cơ quan nhà nước. Việt Nam thiếu hụt chuyên gia an ninh mạng lâu dài, nên ngành có mức lương khởi điểm cao và ít bị bão hòa.',
+ 'Kỹ sư SOC, pentester, chuyên gia ứng cứu sự cố, kiểm toán an toàn thông tin','Học viện Kỹ thuật Mật mã, PTIT, ĐH Bách khoa Hà Nội, ĐH CNTT (ĐHQG-HCM)','Mạng máy tính, Linux, mật mã, kiểm thử xâm nhập, phân tích log',
+ ['Học Tin và mạng cơ bản; tập cài Linux trên máy ảo; tìm hiểu CTF (cuộc thi bảo mật) dành cho người mới.','Học mạng máy tính, hệ điều hành, lập trình; luyện các nền tảng như TryHackMe, thi CTF sinh viên.','Học mật mã, kiểm thử ứng dụng web; lấy chứng chỉ CompTIA Security+ hoặc CEH; thực tập tại SOC.','Làm SOC Analyst hoặc kỹ sư bảo mật junior; mục tiêu OSCP hoặc CISSP Associate sau 2 năm.','Lên chuyên gia ứng cứu hoặc pentester cao cấp 35–50 triệu; hướng quản lý rủi ro (CISO) nếu thích chiến lược.']),
+M('Công nghệ bán dẫn & Thiết kế vi mạch','Công nghệ số','A00 A01 X06 A10',3,[22,28],'kt cn nc dt',[14,32,70],22,10,9,
+ 'Việt Nam đặt mục tiêu 50.000 kỹ sư bán dẫn vào năm 2030, trong khi hiện nguồn cung còn rất mỏng. Các tập đoàn như Intel, Samsung, Amkor và nhiều công ty thiết kế vi mạch đang mở rộng, nên người học ngành này có lợi thế khan hiếm rõ rệt.',
+ 'Kỹ sư thiết kế vi mạch (IC design), kỹ sư kiểm định chip, kỹ sư quy trình, kỹ sư đóng gói kiểm thử','ĐH Bách khoa Hà Nội, ĐH Bách khoa TP.HCM, ĐH Công nghệ (ĐHQGHN), ĐH Khoa học Tự nhiên TP.HCM, ĐH FPT','Điện tử số/tương tự, Verilog/VHDL, vật lý bán dẫn, công cụ EDA, tiếng Anh chuyên ngành',
+ ['Tập trung Toán, Lý; làm quen mạch điện cơ bản và Arduino; học tiếng Anh vì tài liệu bán dẫn gần như hoàn toàn bằng tiếng Anh.','Học mạch điện, điện tử số, vật lý bán dẫn; học Verilog; tham gia CLB điện tử hoặc cuộc thi thiết kế vi mạch.','Chuyên sâu thiết kế số hoặc tương tự; thực tập tại nhà máy hoặc công ty thiết kế chip; tìm học bổng hoặc chương trình trao đổi.','Vào vị trí Junior Design/Verification Engineer; tập sử dụng công cụ EDA chuẩn công nghiệp.','Lên kỹ sư chính 35–50 triệu; đi du học thạc sĩ hoặc làm cho tập đoàn quốc tế; có thể dẫn dắt đội thiết kế.']),
+M('Cơ điện tử, Robot & Tự động hóa','Kỹ thuật & Sản xuất','A00 A01 X06 A10',2,[21,27],'kt cn ai dt ck',[11,24,50],12,40,8,
+ 'Làn sóng dịch chuyển nhà máy về Việt Nam và nhu cầu nâng cấp dây chuyền đòi hỏi kỹ sư tự động hóa, robot, IoT. Đây là ngành kết hợp cơ khí, điện và lập trình nên khó bị thay thế.',
+ 'Kỹ sư tự động hóa, PLC/SCADA, kỹ sư robot, kỹ sư IoT, kỹ sư bảo trì nhà máy thông minh','ĐH Bách khoa Hà Nội, ĐH Bách khoa TP.HCM, ĐH Sư phạm Kỹ thuật TP.HCM, ĐH Công nghiệp Hà Nội','Điều khiển tự động, PLC, vi điều khiển, CAD, lập trình C/Python',
+ ['Học tốt Toán, Lý; tự làm mạch Arduino hoặc robot đơn giản; tham gia cuộc thi Robocon hoặc STEM ở trường.','Học cơ học, mạch điện, vi điều khiển, CAD; vào CLB robot; thực hành PLC trong phòng thí nghiệm.','Làm đồ án hệ thống tự động hoặc robot; thực tập ở nhà máy sản xuất; lấy chứng chỉ PLC Siemens hoặc tương đương.','Làm kỹ sư tự động hóa hoặc bảo trì; học hệ thống MES và IoT; mục tiêu 11–15 triệu.','Lên kỹ sư dự án hoặc trưởng nhóm 24–35 triệu; chuyên sâu robot công nghiệp hoặc quản lý nhà máy.']),
+M('Kỹ thuật ô tô & Xe điện','Kỹ thuật & Sản xuất','A00 A01 C01 A10 C16',2,[21,26],'kt cn ck nl',[10,22,45],10,25,8,
+ 'Sự lớn mạnh của VinFast và chuỗi cung ứng xe điện, pin, trạm sạc kéo theo nhu cầu kỹ sư chuyên sâu về hệ thống điện, pin và phần mềm nhúng trên xe.',
+ 'Kỹ sư thiết kế xe, kỹ sư pin và hệ truyền động điện, kỹ sư phần mềm nhúng ô tô, kỹ sư chất lượng','ĐH Bách khoa Hà Nội, ĐH Bách khoa TP.HCM, ĐH Giao thông Vận tải, ĐH Công nghiệp TP.HCM','Cơ khí, điện – điện tử, nhúng, mô phỏng CAE, tiếng Anh',
+ ['Giữ vững Toán, Lý; tìm hiểu cấu tạo xe điện; tham gia các cuộc thi xe tiết kiệm nhiên liệu.','Học cơ học, nhiệt động, mạch điện; thực hành CAD, mô phỏng; vào CLB xe sinh viên.','Chọn nhánh pin và truyền động điện hoặc nhúng; thực tập tại nhà máy ô tô; làm đồ án trên mô hình xe thật.','Vào vị trí kỹ sư R&D hoặc chất lượng; học tiêu chuẩn ISO 26262 và công cụ mô phỏng.','Lên kỹ sư chính 22–35 triệu; làm cho hãng lớn hoặc trung tâm R&D; có thể học tiếp thạc sĩ chuyên ngành.']),
+M('Năng lượng tái tạo & Hệ thống điện','Kỹ thuật & Sản xuất','A00 A01 D07 A10 A11',2,[19,25],'kt tn nc nl dt',[10,22,45],11,20,8,
+ 'Mục tiêu phát thải ròng bằng 0 vào năm 2050 và Quy hoạch điện VIII thúc đẩy điện gió, điện mặt trời, lưu trữ năng lượng, lưới điện thông minh. Nhu cầu nhân lực vận hành và thiết kế tăng đều.',
+ 'Kỹ sư điện mặt trời/gió, kỹ sư lưới điện thông minh, kỹ sư lưu trữ năng lượng, tư vấn hiệu quả năng lượng','ĐH Bách khoa Hà Nội, ĐH Điện lực, ĐH Bách khoa TP.HCM, ĐH Công nghiệp Hà Nội','Hệ thống điện, điện tử công suất, mô phỏng, quản lý dự án năng lượng',
+ ['Học tốt Lý, Hóa; theo dõi tin tức năng lượng; thử dự án nhỏ về pin mặt trời cho trường.','Học mạch điện, máy điện, điện tử công suất; tham gia nhóm nghiên cứu năng lượng.','Chuyên sâu điện mặt trời, gió hoặc lưu trữ; thực tập tại nhà máy điện hoặc công ty EPC; học phần mềm PVsyst, ETAP.','Làm kỹ sư thiết kế hoặc vận hành; học quản lý dự án; lấy chứng chỉ PMP hoặc CEM.','Lên chuyên viên dự án 22–35 triệu; có thể làm tư vấn quốc tế hoặc quản lý dự án năng lượng.']),
+M('Logistics & Quản lý chuỗi cung ứng','Kinh tế & Quản trị','A00 A01 D01 X26 C01 A10 A09 D84 C14',1,[22,27],'kd so gt du',[9,20,45],14,60,6,
+ 'Thương mại điện tử và xuất khẩu làm chi phí logistics trở thành bài toán lớn của doanh nghiệp. Ngành cần người hiểu vận tải, kho vận, dữ liệu và thủ tục hải quan, thường thiếu nhân lực trình độ cao.',
+ 'Chuyên viên chuỗi cung ứng, điều phối vận tải, quản lý kho, chuyên viên xuất nhập khẩu, phân tích vận hành','ĐH Ngoại thương, ĐH Kinh tế Quốc dân, ĐH Giao thông Vận tải, ĐH Kinh tế TP.HCM','Excel/phân tích dữ liệu, quy trình xuất nhập khẩu, tiếng Anh thương mại, ERP',
+ ['Học Toán và Anh tốt; hiểu cách hàng hóa đi từ nhà máy đến tay khách; luyện tiếng Anh đạt IELTS 5.5.','Học kinh tế, vận tải, kho vận; thành thạo Excel; tham gia CLB kinh doanh hoặc cuộc thi case study logistics.','Chọn mảng (xuất nhập khẩu, kho, vận tải); thực tập tại công ty logistics hoặc hãng tàu; lấy chứng chỉ FIATA hoặc tương đương.','Làm điều phối hoặc chuyên viên XNK; học ERP/WMS; mục tiêu thành thạo thủ tục hải quan.','Lên quản lý vận hành 20–35 triệu; có thể làm quản lý chuỗi cung ứng cho tập đoàn sản xuất.']),
+M('Kinh doanh quốc tế & Thương mại điện tử','Kinh tế & Quản trị','A00 A01 D01 D07 A10 A11 D84 C14',2,[22,27],'kd gt kn du',[9,20,45],13,50,6,
+ 'Việt Nam là một trong những thị trường thương mại điện tử tăng nhanh nhất Đông Nam Á, với hiệp định thương mại tự do mở rộng thị trường xuất khẩu. Ngành hợp người thích đàm phán và làm việc với đối tác nước ngoài.',
+ 'Chuyên viên kinh doanh quốc tế, quản lý sàn TMĐT, chuyên viên phát triển thị trường, nhà xuất khẩu','ĐH Ngoại thương, ĐH Kinh tế Quốc dân, ĐH Kinh tế TP.HCM, RMIT','Tiếng Anh, đàm phán, phân tích thị trường, vận hành sàn TMĐT, quản trị dự án',
+ ['Học tiếng Anh nghiêm túc (IELTS 6.0); thử bán một sản phẩm nhỏ trên sàn TMĐT để hiểu quy trình.','Học kinh tế vi mô, marketing, thương mại quốc tế; tham gia các cuộc thi khởi nghiệp và case.','Thực tập tại doanh nghiệp xuất khẩu hoặc sàn TMĐT; học thêm một ngoại ngữ thứ hai; đi trao đổi sinh viên.','Làm chuyên viên kinh doanh hoặc vận hành sàn; mục tiêu doanh số hoặc KPI cụ thể trong năm đầu.','Lên trưởng nhóm/quản lý thị trường 20–35 triệu; có thể mở doanh nghiệp xuất khẩu riêng.']),
+M('Tài chính – Ngân hàng & Fintech','Kinh tế & Quản trị','A00 A01 D01 D07 A10 A11 D84 C14',2,[22,28],'so kd tc',[10,24,55],9,40,5,
+ 'Chuyển đổi số ngân hàng, thanh toán không tiền mặt, thị trường vốn phát triển. Nhu cầu cao ở phân tích rủi ro, dữ liệu, quản lý tài sản và sản phẩm fintech; thu nhập thường vượt mặt bằng chung.',
+ 'Chuyên viên phân tích tài chính, quản lý rủi ro, chuyên viên quan hệ khách hàng, product owner fintech','ĐH Kinh tế Quốc dân, Học viện Ngân hàng, ĐH Ngoại thương, ĐH Kinh tế TP.HCM','Phân tích tài chính, Excel/SQL/Python, quản trị rủi ro, tiếng Anh',
+ ['Học vững Toán; theo dõi tin tài chính; tập quản lý chi tiêu cá nhân bằng bảng tính.','Học kinh tế, tài chính doanh nghiệp, thống kê; luyện Excel nâng cao và SQL cơ bản.','Thực tập tại ngân hàng hoặc công ty chứng khoán; thi chứng chỉ CFA Level 1 hoặc ACCA nếu đủ sức; học thêm Python phân tích.','Làm chuyên viên phân tích hoặc tín dụng; học quản trị rủi ro; mục tiêu 10–15 triệu.','Lên chuyên viên cao cấp 24–40 triệu; hướng quản lý đầu tư, rủi ro hoặc sản phẩm số.']),
+M('Marketing & Truyền thông số','Kinh tế & Quản trị','A00 A01 C00 D01 D14 A08 A09 A10 C14 C19 C20 D66 D84',1,[22,27],'st kd gt vd vh kn ld am',[8,18,40],9,35,4,
+ 'Chi tiêu quảng cáo số tiếp tục tăng, nhưng AI tạo nội dung đại trà nên giá trị nằm ở chiến lược, hiểu khách hàng và sáng tạo có tính phân biệt. Cạnh tranh cao, người làm tốt có thu nhập hấp dẫn.',
+ 'Chuyên viên digital marketing, content strategist, chuyên viên SEO/quảng cáo, brand manager, chuyên viên phân tích khách hàng','ĐH Kinh tế Quốc dân, ĐH Ngoại thương, Học viện Báo chí và Tuyên truyền, ĐH Kinh tế TP.HCM','Phân tích dữ liệu quảng cáo, sáng tạo nội dung, SEO, quản trị thương hiệu, tiếng Anh',
+ ['Rèn viết và trình bày; tự quản lý một kênh nội dung nhỏ để hiểu cách người xem phản ứng.','Học marketing căn bản, hành vi người tiêu dùng; thực hành Google Ads/Meta Ads; tham gia CLB truyền thông.','Thực tập tại agency hoặc bộ phận marketing; lấy chứng chỉ Google/Meta; làm portfolio chiến dịch có số liệu.','Làm chuyên viên digital hoặc content; học phân tích dữ liệu và tự động hóa bằng AI.','Lên trưởng nhóm hoặc brand manager 18–35 triệu; chọn hướng performance, brand hoặc dữ liệu.']),
+M('Kế toán – Kiểm toán','Kinh tế & Quản trị','A00 A01 D01 C01 A10 A11 D84 C14',1,[20,26],'so kd tc',[8,15,35],3,30,3,
+ 'Nhu cầu ổn định nhưng công việc ghi chép lặp lại sẽ bị tự động hóa mạnh. Người học nên hướng đến kiểm toán, tư vấn thuế, kế toán quản trị và phân tích tài chính thay vì chỉ làm sổ sách.',
+ 'Kế toán tổng hợp, kiểm toán viên, chuyên viên thuế, kế toán quản trị, kiểm soát nội bộ','Học viện Tài chính, ĐH Kinh tế Quốc dân, ĐH Thương mại, ĐH Kinh tế TP.HCM','Chuẩn mực kế toán VAS/IFRS, Excel, phần mềm kế toán, phân tích tài chính',
+ ['Giữ nền Toán tốt, tính cẩn thận; làm quen Excel.','Học nguyên lý kế toán, thuế, kiểm toán; thành thạo phần mềm kế toán và Excel nâng cao.','Thực tập tại công ty kiểm toán; bắt đầu học ACCA hoặc CPA; học IFRS.','Làm kiểm toán viên hoặc kế toán tổng hợp; hoàn thành các môn ACCA; học dữ liệu và tự động hóa.','Lên kiểm toán viên chính, kế toán trưởng hoặc tư vấn thuế 15–30 triệu.']),
+M('Y khoa (Bác sĩ đa khoa)','Sức khỏe & Khoa học sự sống','B00 A00 B04 A11',3,[25,29],'yt nc xh sh',[9,22,60],7,20,9,
+ 'Dân số già hóa, Việt Nam còn thiếu bác sĩ so với mục tiêu y tế quốc gia. Đào tạo dài (6 năm cộng chuyên khoa) nhưng nghề ổn định, ít bị thay thế, thu nhập tăng mạnh sau khi có chuyên khoa hoặc hành nghề riêng.',
+ 'Bác sĩ đa khoa, bác sĩ chuyên khoa, bác sĩ nội trú, bác sĩ nghiên cứu','ĐH Y Hà Nội, ĐH Y Dược TP.HCM, ĐH Y Dược Huế, ĐH Y Dược Thái Bình, Trường Y (ĐHQGHN)','Giải phẫu, sinh lý, kỹ năng lâm sàng, giao tiếp với bệnh nhân, tiếng Anh y khoa',
+ ['Giữ học lực Giỏi, đặc biệt Hóa và Sinh; trải nghiệm tình nguyện ở bệnh viện; luyện đề thi theo tổ hợp B00.','Học y cơ sở (giải phẫu, sinh lý, sinh hóa) rất nhiều, cần học đều; tham gia nghiên cứu khoa học sinh viên.','Học lâm sàng tại bệnh viện; chọn hướng chuyên khoa; chuẩn bị thi nội trú.','Thi nội trú hoặc làm bác sĩ điều trị tại cơ sở y tế; hoàn thành chứng chỉ hành nghề.','Hoàn thành chuyên khoa I/II, mức thu nhập 22–40 triệu hoặc cao hơn; có thể mở phòng khám hoặc nghiên cứu.']),
+M('Dược học','Sức khỏe & Khoa học sự sống','A00 B00 D07 A11 B04',3,[22,27],'yt nc hh sh',[9,18,40],7,12,8,
+ 'Công nghiệp dược và sản phẩm chăm sóc sức khỏe tăng nhờ chi tiêu y tế bình quân đầu người tăng. Dược sĩ có thể làm ở bệnh viện, nhà thuốc, sản xuất, nghiên cứu hoặc đăng ký thuốc.',
+ 'Dược sĩ lâm sàng, dược sĩ nhà thuốc, chuyên viên đăng ký thuốc, nghiên cứu phát triển (R&D), kiểm nghiệm','ĐH Dược Hà Nội, ĐH Y Dược TP.HCM, ĐH Dược Cần Thơ, ĐH Y Dược Huế','Hóa dược, dược lý, kiểm nghiệm, quy định GMP/GPP, tiếng Anh dược',
+ ['Học tốt Hóa, Toán; tìm hiểu các hướng làm việc của dược sĩ.','Học hóa, sinh, dược lý; thực hành phòng thí nghiệm; tham gia CLB dược.','Chọn hướng (lâm sàng, công nghiệp, kiểm nghiệm); thực tập tại bệnh viện hoặc nhà máy dược.','Lấy chứng chỉ hành nghề; làm dược sĩ hoặc chuyên viên QA/QC.','Lên dược sĩ lâm sàng cao cấp hoặc quản lý chất lượng 18–30 triệu; có thể mở nhà thuốc hoặc làm R&D.']),
+M('Điều dưỡng & Kỹ thuật y học','Sức khỏe & Khoa học sự sống','B00 A00 D07 D08 B04 A11',2,[18,24],'yt xh dl sh',[8,14,30],10,35,9,
+ 'Dân số già hóa tạo nhu cầu chăm sóc dài hạn lớn ở trong nước và nước ngoài. Điều dưỡng có tiếng Nhật hoặc Đức có cơ hội làm việc quốc tế với thu nhập vượt mặt bằng trong nước.',
+ 'Điều dưỡng lâm sàng, điều dưỡng chuyên khoa, kỹ thuật viên xét nghiệm/hình ảnh, điều dưỡng đi nước ngoài','ĐH Điều dưỡng Nam Định, ĐH Y Hà Nội, ĐH Y Dược TP.HCM, ĐH Y Dược Hải Phòng','Kỹ năng chăm sóc, giao tiếp, đạo đức nghề nghiệp, ngoại ngữ (Nhật/Đức/Anh)',
+ ['Học tốt Sinh, Hóa; tình nguyện ở cơ sở chăm sóc để biết nghề có phù hợp không.','Học chăm sóc cơ bản, giải phẫu, sinh lý; bắt đầu học ngoại ngữ thứ hai nếu muốn đi nước ngoài.','Thực tập lâm sàng nhiều khoa; chọn chuyên khoa (hồi sức, nhi, lão khoa); thi chứng chỉ ngoại ngữ N3/B1.','Làm điều dưỡng tại bệnh viện; xin chứng chỉ hành nghề; nộp hồ sơ chương trình đi nước ngoài nếu có nhu cầu.','Lên điều dưỡng trưởng hoặc điều dưỡng chuyên khoa 14–25 triệu; làm quốc tế có thể cao hơn nhiều.']),
+M('Công nghệ sinh học & Công nghệ thực phẩm','Sức khỏe & Khoa học sự sống','A00 A02 B00 D07 D08 A11 B04 C17',2,[18,25],'nc tn yt sh hh nn',[8,16,35],8,15,7,
+ 'Chế biến nông sản, thực phẩm chức năng, vắc-xin và y sinh là các mảng Việt Nam ưu tiên. Ngành phù hợp người thích phòng thí nghiệm và quy trình sản xuất.',
+ 'Nghiên cứu viên, kỹ sư QA/QC thực phẩm, kỹ sư quy trình, chuyên viên R&D sản phẩm','ĐH Bách khoa TP.HCM, ĐH KHTN (ĐHQG), ĐH Bách khoa Hà Nội, ĐH Nông Lâm TP.HCM','Kỹ thuật phòng thí nghiệm, vi sinh, phân tích dữ liệu, tiêu chuẩn HACCP/ISO 22000',
+ ['Học tốt Sinh, Hóa; làm các thí nghiệm nhỏ ở trường.','Học sinh học phân tử, vi sinh, hóa sinh; thực hành phòng thí nghiệm.','Chọn hướng (thực phẩm, y sinh, nông nghiệp); thực tập ở nhà máy hoặc viện nghiên cứu.','Làm QA/QC hoặc R&D; lấy chứng chỉ HACCP, ISO 22000.','Lên trưởng bộ phận R&D hoặc quản lý chất lượng 16–28 triệu; có thể học tiếp thạc sĩ, tiến sĩ.']),
+M('Khoa học môi trường & Quản lý tài nguyên','Sức khỏe & Khoa học sự sống','A00 A02 B00 D01 D10 C00 A09 A11 B04 C20 C17',1,[16,23],'tn nc xh hh',[8,15,32],9,12,8,
+ 'Doanh nghiệp xuất khẩu phải đáp ứng chuẩn ESG và cơ chế tín chỉ carbon, tạo nhu cầu tư vấn môi trường, kiểm kê khí nhà kính, xử lý chất thải. Chính sách chuyển đổi xanh tăng sức nặng cho ngành.',
+ 'Chuyên viên ESG/phát triển bền vững, tư vấn đánh giá tác động môi trường, kỹ sư xử lý nước thải, chuyên viên tín chỉ carbon','ĐH Khoa học Tự nhiên (ĐHQG), ĐH Tài nguyên và Môi trường, ĐH Nông Lâm, ĐH Bách khoa','Đánh giá tác động môi trường, GIS, kiểm kê khí nhà kính, báo cáo ESG',
+ ['Quan tâm các vấn đề môi trường; học tốt Hóa, Sinh, Địa; tham gia hoạt động xanh ở trường.','Học sinh thái, hóa môi trường, GIS; làm khảo sát thực địa.','Chọn hướng ESG, xử lý chất thải hoặc GIS; thực tập ở doanh nghiệp hoặc đơn vị tư vấn.','Làm chuyên viên môi trường; học tiêu chuẩn GRI, ISO 14064.','Lên chuyên gia ESG hoặc quản lý bền vững 15–28 triệu.']),
+M('Thiết kế đồ họa & Truyền thông đa phương tiện','Sáng tạo & Truyền thông','D01 D14 H00 V00 C00 C14 D66',1,[20,26],'st cn ve vd gm am',[8,16,35],7,20,4,
+ 'Nhu cầu hình ảnh, video, UI/UX cho ứng dụng và game vẫn lớn, nhưng AI tạo ảnh làm mặt bằng cạnh tranh gắt hơn. Người có gu thẩm mỹ, kể chuyện và hiểu sản phẩm sẽ có lợi thế.',
+ 'Nhà thiết kế UI/UX, thiết kế đồ họa, họa sĩ minh họa, dựng phim/motion, art director','ĐH Mỹ thuật Công nghiệp, ĐH Kiến trúc, ĐH FPT, ĐH Văn Lang, RMIT','Bố cục, màu sắc, Figma/Adobe, kể chuyện bằng hình ảnh, tư duy sản phẩm',
+ ['Luyện vẽ và quan sát; làm quen Figma hoặc Canva; thử thiết kế poster cho CLB.','Học nguyên lý thiết kế, màu sắc, typography; xây portfolio trên Behance.','Chọn hướng UI/UX, motion hoặc minh họa; thực tập ở agency hoặc công ty sản phẩm.','Làm designer junior; học nghiên cứu người dùng và sử dụng AI như công cụ hỗ trợ.','Lên senior hoặc art director 16–30 triệu; có thể làm freelance cho khách nước ngoài.']),
+M('Ngôn ngữ Anh, Hàn, Nhật, Trung','Sáng tạo & Truyền thông','D01 D14 D66 D10 D68 D69 D70 D84',2,[22,28],'gt xh vh du',[9,18,40],6,25,5,
+ 'Dòng vốn FDI từ Hàn, Nhật, Trung Quốc tạo nhu cầu lớn cho người giỏi ngoại ngữ kết hợp một chuyên môn (kinh doanh, kỹ thuật, du lịch). Phiên dịch thuần túy bị AI ảnh hưởng, nên cần học kèm kỹ năng khác.',
+ 'Biên phiên dịch, chuyên viên đối ngoại, trợ lý giám đốc người nước ngoài, quản lý nhân sự FDI, giáo viên ngoại ngữ','ĐH Ngoại ngữ (ĐHQGHN), ĐH Hà Nội, ĐH Ngoại ngữ Huế, ĐH Khoa học Xã hội và Nhân văn','Ngoại ngữ chuyên ngành, giao tiếp liên văn hóa, soạn thảo văn bản, chuyên môn thứ hai',
+ ['Chọn một ngoại ngữ và học đều; luyện nghe nói với nội dung thật; lấy IELTS 6.0 hoặc TOPIK/JLPT cấp thấp.','Học ngôn ngữ, biên phiên dịch cơ bản; chọn thêm chuyên môn thứ hai (kinh doanh hoặc IT).','Đạt chứng chỉ cao (IELTS 7.0, N2, TOPIK 5, HSK 5); thực tập tại công ty FDI.','Làm biên phiên dịch hoặc chuyên viên đối ngoại; học thêm kiến thức ngành bạn phục vụ.','Lên trưởng nhóm hoặc quản lý FDI 18–35 triệu; có thể làm phiên dịch cao cấp.']),
+M('Du lịch – Khách sạn & Dịch vụ','Sáng tạo & Truyền thông','C00 D01 D14 D66 A01 A08 A09 C19 C20 D69 D84',1,[20,26],'gt kd xh du dl ld',[8,16,40],8,40,7,
+ 'Du lịch quốc tế phục hồi mạnh và Việt Nam được đánh giá cao ở khu vực. Ngành cần người quản lý trải nghiệm, vận hành khách sạn, tổ chức sự kiện, với yêu cầu cao về ngoại ngữ và thái độ dịch vụ.',
+ 'Quản lý khách sạn, điều hành tour, quản lý sự kiện, chuyên viên phát triển sản phẩm du lịch','ĐH Kinh tế Quốc dân, ĐH Văn Hóa, ĐH Hoa Sen, ĐH Văn Lang, Học viện Du lịch','Dịch vụ khách hàng, ngoại ngữ, vận hành khách sạn, quản lý sự kiện, bán hàng',
+ ['Luyện tiếng Anh, giao tiếp; tham gia hoạt động tổ chức sự kiện ở trường.','Học quản trị du lịch, lữ hành, nhà hàng khách sạn; làm thêm ở nhà hàng hoặc khách sạn.','Thực tập tại khách sạn 4–5 sao; học thêm ngoại ngữ thứ hai; làm đồ án thiết kế tour.','Làm điều hành hoặc giám sát bộ phận; xây dựng mạng lưới quan hệ.','Lên quản lý bộ phận hoặc quản lý khách sạn 18–35 triệu; có thể mở công ty lữ hành riêng.']),
+M('Sư phạm (Toán, Tin học, Tiếng Anh, STEM)','Giáo dục & Xã hội','A00 A01 D01 B00 C00 A10 A11 B04 C14 D84 T05',3,[22,28],'xh gt nc gd ld',[7,12,22],3,20,8,
+ 'Chương trình giáo dục phổ thông mới 2018 cần giáo viên Tin học, STEM và Tiếng Anh. Luật Nhà giáo và cải cách tiền lương nhà giáo cải thiện thu nhập, nhưng nghề nhìn chung có thu nhập vừa phải so với các ngành công nghệ.',
+ 'Giáo viên THPT, giáo viên Tin học/STEM, giảng viên, chuyên gia giáo dục số','ĐH Sư phạm Hà Nội, ĐH Sư phạm TP.HCM, ĐH Giáo dục (ĐHQGHN), ĐH Sư phạm Huế','Phương pháp giảng dạy, công nghệ giáo dục, giao tiếp, thiết kế bài giảng',
+ ['Giữ học lực Giỏi và hạnh kiểm tốt (nhiều trường sư phạm yêu cầu); thử dạy kèm hoặc làm cộng tác viên lớp học.','Học chuyên môn và tâm lý giáo dục; tham gia hoạt động đoàn đội, gia sư.','Thực tập sư phạm ở trường phổ thông; học công cụ dạy học số và đánh giá năng lực.','Vào làm giáo viên; hoàn thành chứng chỉ nghiệp vụ; học thêm công nghệ giáo dục.','Lên giáo viên cốt cán hoặc tổ trưởng 12–20 triệu; có thể làm giảng viên hoặc phát triển nội dung giáo dục số.']),
+M('Luật kinh tế & Luật quốc tế','Giáo dục & Xã hội','A00 C00 D01 D14 C01 A08 A09 C14 C19 C20 D66 D84',2,[22,28],'xh gt kd ph vh',[8,18,50],5,12,6,
+ 'Hội nhập quốc tế, FDI và giao dịch số làm tăng nhu cầu tư vấn hợp đồng, sở hữu trí tuệ, thương mại, dữ liệu cá nhân. Người giỏi tiếng Anh pháp lý có lợi thế lớn.',
+ 'Luật sư, chuyên viên pháp chế doanh nghiệp, tư vấn sở hữu trí tuệ, chuyên viên tuân thủ','ĐH Luật Hà Nội, ĐH Luật TP.HCM, Khoa Luật (ĐHQGHN), ĐH Ngoại thương','Phân tích văn bản pháp luật, soạn hợp đồng, tranh tụng, tiếng Anh pháp lý',
+ ['Luyện đọc hiểu và lập luận; học tiếng Anh; tham gia tranh biện.','Học các môn luật cơ bản (dân sự, thương mại, hình sự); tham gia phiên tòa giả định.','Thực tập ở văn phòng luật hoặc phòng pháp chế; chọn chuyên sâu (thương mại, sở hữu trí tuệ, dữ liệu).','Làm chuyên viên pháp chế hoặc luật sư tập sự; học lớp nghiệp vụ luật sư.','Lên luật sư hoặc trưởng phòng pháp chế 25–50 triệu; làm tư vấn quốc tế nếu có chuyên môn.']),
+M('Kiến trúc & Xây dựng thông minh','Kỹ thuật & Sản xuất','V00 A00 A01 D01 A10',2,[19,26],'st kt ve xd',[8,18,40],6,25,6,
+ 'Đô thị hóa, nhà ở xã hội và hạ tầng công nghiệp giữ nhu cầu ổn định. Công nghệ BIM, thiết kế xanh và quản lý dự án số đang trở thành tiêu chuẩn mới.',
+ 'Kiến trúc sư, kỹ sư BIM, kỹ sư kết cấu, quản lý dự án xây dựng, thiết kế nội thất','ĐH Kiến trúc Hà Nội, ĐH Kiến trúc TP.HCM, ĐH Xây dựng, ĐH Bách khoa TP.HCM','Vẽ và tư duy không gian, AutoCAD/Revit, kết cấu, quản lý dự án',
+ ['Luyện vẽ (nếu chọn V00), tư duy không gian; quan sát công trình quanh bạn.','Học thiết kế cơ sở, kết cấu, vật liệu; thành thạo AutoCAD và SketchUp.','Học Revit/BIM; thực tập ở văn phòng thiết kế hoặc công trường; làm đồ án công trình thật.','Làm kiến trúc sư hoặc kỹ sư BIM junior; học quản lý dự án; lấy chứng chỉ hành nghề sau thời gian quy định.','Lên chủ trì thiết kế hoặc quản lý dự án 18–35 triệu.']),
+M('Nông nghiệp công nghệ cao','Sức khỏe & Khoa học sự sống','A00 A02 B00 D07 D08 A11 B04',1,[15,22],'tn kt nc nn sh',[8,15,30],8,18,8,
+ 'Việt Nam là cường quốc xuất khẩu nông sản, cần chuyển sang canh tác thông minh, truy xuất nguồn gốc, chế biến sâu. Nhu cầu lớn ở kỹ sư biết áp dụng cảm biến, dữ liệu và quy trình chuẩn quốc tế.',
+ 'Kỹ sư nông nghiệp thông minh, chuyên viên kiểm soát chất lượng nông sản, quản lý trang trại công nghệ cao, tư vấn VietGAP','ĐH Nông Lâm TP.HCM, Học viện Nông nghiệp Việt Nam, ĐH Cần Thơ, ĐH Nông Lâm Huế','Canh tác thông minh, IoT nông nghiệp, tiêu chuẩn GAP, quản lý chuỗi giá trị',
+ ['Học tốt Sinh, Hóa; tham quan trang trại công nghệ cao; làm dự án trồng rau thủy canh nhỏ.','Học sinh học cây trồng, thổ nhưỡng, hệ thống tưới; thực hành nhà màng.','Chọn hướng (trồng trọt, chăn nuôi, chế biến); thực tập ở trang trại hoặc công ty nông sản xuất khẩu.','Làm kỹ sư hiện trường hoặc kiểm soát chất lượng; học tiêu chuẩn GlobalGAP.','Lên quản lý trang trại hoặc chuyên viên chuỗi giá trị 15–25 triệu; có thể khởi nghiệp nông nghiệp.'])
+,M('Công tác xã hội & Tâm lý học','Giáo dục & Xã hội','B00 C00 D01 D14 D66 A08 A09 B04 C14 C19 C20',1,[18,25],'xh gd yt dl ld',[7,14,30],9,15,8,
+ 'Dân số già hóa, áp lực học đường và sức khỏe tinh thần làm tăng nhu cầu tham vấn tâm lý và công tác xã hội ở trường học, bệnh viện, doanh nghiệp và tổ chức cộng đồng. Ngành hợp người biết lắng nghe và kiên nhẫn; thu nhập khởi điểm khiêm tốn nhưng tăng rõ khi có chuyên môn sâu.',
+ 'Nhân viên công tác xã hội, chuyên viên tham vấn học đường, chuyên viên tâm lý, quản lý dự án cộng đồng, chuyên viên nhân sự','ĐH Khoa học Xã hội và Nhân văn (ĐHQG), ĐH Sư phạm Hà Nội, ĐH Lao động – Xã hội, ĐH Mở TP.HCM','Lắng nghe, tham vấn, đánh giá nhu cầu, viết đề án, làm việc nhóm',
+ ['Học tốt Văn, Sinh hoặc Anh; tham gia câu lạc bộ tình nguyện, đội công tác xã hội của trường; tập lắng nghe bạn bè.','Học tâm lý học đại cương, phát triển con người, kỹ năng tham vấn; làm tình nguyện thường xuyên tại mái ấm, trường học hoặc trung tâm cộng đồng.','Chọn hướng (học đường, y tế, doanh nghiệp, trẻ em); thực tập có giám sát tại cơ sở xã hội; học thêm kỹ năng viết đề án và gọi vốn.','Làm nhân viên công tác xã hội hoặc chuyên viên tham vấn; học thêm chứng chỉ tham vấn; tham gia nhóm giám sát chuyên môn.','Lên quản lý dự án hoặc trưởng nhóm 14–25 triệu; học thạc sĩ tâm lý lâm sàng hoặc làm cho tổ chức quốc tế để tăng thu nhập.'])
+,M('Âm nhạc: Thanh nhạc, Nhạc cụ & Sáng tác','Sáng tạo & Truyền thông','N00 N01',1,[18,24],'am st vh gt',[7,15,40],6,8,5,
+ 'Công nghiệp văn hóa, âm nhạc số và livestream mở nhiều hướng: biểu diễn, sản xuất âm nhạc, phối khí, dạy nhạc, nhạc phim và game. Thu nhập chênh lệch lớn: ổn định khi dạy hoặc ở đoàn nghệ thuật, tăng mạnh khi có thương hiệu cá nhân hoặc làm sản xuất.',
+ 'Ca sĩ, nhạc công, nhà soạn nhạc, nhà sản xuất âm nhạc (producer), giáo viên âm nhạc, chỉ huy dàn nhạc, kỹ thuật viên âm thanh','Học viện Âm nhạc Quốc gia Việt Nam, Nhạc viện TP.HCM, Học viện Âm nhạc Huế, ĐH Sư phạm Nghệ thuật Trung ương','Cao độ và tiết tấu, đọc nhạc, một nhạc cụ chính, thu âm cơ bản, biểu diễn trước khán giả, kỷ luật luyện tập',
+ ['Học nhạc lý và xướng âm đều đặn, luyện nhạc cụ hoặc thanh nhạc với thầy; chuẩn bị video biểu diễn; hỏi trường về lịch thi năng khiếu.','Học hòa âm, lịch sử âm nhạc, chuyên ngành chính; biểu diễn trong các buổi hòa nhạc của trường; bắt đầu tập sáng tác hoặc phối khí.','Chọn hướng (biểu diễn, sáng tác, sư phạm, sản xuất); học phần mềm làm nhạc như Ableton hoặc FL Studio; tham gia dự án thu âm thật.','Làm giảng viên nhạc, nhạc công, ca sĩ hoặc producer; xây dựng kênh nhạc cá nhân; nhận show và hợp đồng thu âm.','Thu nhập 15–40 triệu khi có thương hiệu riêng hoặc quản lý sản xuất; có thể học thạc sĩ hoặc mở trung tâm đào tạo âm nhạc.'])
+,M('Múa, Biên đạo & Nghệ thuật biểu diễn','Sáng tạo & Truyền thông','S00 N00',1,[17,24],'am st xh gt',[6,12,30],5,5,6,
+ 'Múa mở hướng biểu diễn, biên đạo, giảng dạy, huấn luyện nhóm nhảy và sản xuất nội dung sân khấu, truyền hình, sự kiện. Sự nghiệp biểu diễn thường ngắn nên người học cần kế hoạch chuyển sang biên đạo, giảng dạy hoặc quản lý nghệ thuật.',
+ 'Diễn viên múa, biên đạo, huấn luyện viên nhảy, giáo viên múa, vũ công sự kiện và truyền hình, quản lý nghệ thuật','Học viện Múa Việt Nam, ĐH Sân khấu – Điện ảnh Hà Nội, ĐH Văn hóa Nghệ thuật Quân đội, ĐH Sân khấu – Điện ảnh TP.HCM','Thể lực và độ dẻo, cảm thụ nhịp điệu, trí nhớ động tác, biểu cảm, làm việc nhóm, chịu tập luyện cường độ cao',
+ ['Tập thể lực và độ dẻo đều đặn, học múa hoặc nhảy với giáo viên có chuyên môn; luyện bài thi năng khiếu và quay video hồ sơ.','Học kỹ thuật múa cơ bản, lý thuyết, giải phẫu vận động; tham gia các buổi diễn của trường và đội nhóm.','Chọn hướng biểu diễn hoặc biên đạo; dàn dựng một tiết mục ngắn; học cách phòng ngừa chấn thương và phục hồi.','Vào đoàn nghệ thuật, nhóm nhảy hoặc làm huấn luyện viên; nhận biên đạo cho sự kiện, MV, trường học.','Lên biên đạo chính hoặc mở lớp riêng 12–30 triệu; lên kế hoạch nghề lâu dài khi thể lực giảm.'])
+,M('Diễn xuất, Đạo diễn Sân khấu – Điện ảnh','Sáng tạo & Truyền thông','S00 C00 D01',1,[18,25],'am vd st vh gt',[6,15,50],8,10,5,
+ 'Phim ngắn, series chiếu mạng, quảng cáo, sân khấu và nội dung số làm nhu cầu diễn viên, đạo diễn, biên kịch, dựng phim tăng đều. Thu nhập biến động theo dự án; người vừa diễn vừa biết viết, quay hoặc dựng thường có nhiều việc hơn.',
+ 'Diễn viên sân khấu và điện ảnh, đạo diễn, trợ lý đạo diễn, biên kịch, nhà sản xuất nội dung, diễn viên lồng tiếng','ĐH Sân khấu – Điện ảnh Hà Nội, ĐH Sân khấu – Điện ảnh TP.HCM, ĐH Văn hóa Hà Nội, ĐH Nghệ thuật Huế','Nhập vai và biểu cảm, thuộc và xử lý lời thoại, kể chuyện bằng hình ảnh, làm việc nhóm, chịu áp lực khi bị từ chối',
+ ['Tham gia câu lạc bộ kịch, đọc diễn cảm, xem và phân tích phim; chuẩn bị tiểu phẩm hoặc bài đọc kể cho vòng thi năng khiếu.','Học cơ bản diễn xuất, phân tích kịch bản, lịch sử sân khấu điện ảnh; tham gia dự án phim sinh viên.','Chọn hướng diễn viên, đạo diễn hoặc biên kịch; làm phim ngắn hoàn chỉnh; học kỹ năng quay dựng cơ bản.','Làm trợ lý đạo diễn, diễn viên phụ hoặc nhân viên sản xuất; xây dựng showreel và hồ sơ tác phẩm.','Lên vai chính hoặc đạo diễn dự án 15–50 triệu; có thể mở công ty sản xuất nội dung hoặc đào tạo diễn xuất.'])
+,M('Báo chí – Truyền hình & MC','Sáng tạo & Truyền thông','D01 D14 C00 C19 C20 D66',2,[22,27],'vh gt xh vd st',[8,16,40],6,15,4,
+ 'Truyền thông số, podcast, video ngắn và truyền hình trực tuyến làm nhu cầu biên tập viên, phóng viên đa phương tiện, MC và nhà sáng tạo nội dung tăng. AI viết tin nhanh hơn nên giá trị nằm ở điều tra, phỏng vấn, kể chuyện và uy tín cá nhân.',
+ 'Phóng viên, biên tập viên, MC và dẫn chương trình, phát thanh viên, nhà sản xuất podcast và video, chuyên viên truyền thông','Học viện Báo chí và Tuyên truyền, ĐH Khoa học Xã hội và Nhân văn (ĐHQG), ĐH Văn Lang, ĐH Hoa Sen','Viết tin và phóng sự, phỏng vấn, nói trước ống kính, quay dựng cơ bản, kiểm chứng thông tin, tiếng Anh',
+ ['Viết bài cho báo trường, tập dẫn chương trình lớp; đọc báo mỗi ngày và tập tóm tắt tin bằng lời của mình.','Học cơ sở báo chí, pháp luật và đạo đức nghề; thực hành viết, chụp ảnh, quay dựng; tham gia đài hoặc báo của trường.','Thực tập tại tòa soạn, đài truyền hình hoặc kênh nội dung; làm một loạt bài hoặc podcast có người nghe thật.','Làm phóng viên, biên tập viên hoặc MC; học thêm dữ liệu và kiểm chứng thông tin; có hồ sơ bài và video.','Lên biên tập chính, trưởng bộ phận hoặc MC nhận show 16–40 triệu; học thạc sĩ truyền thông hoặc mở kênh riêng.'])
+,M('Thể dục thể thao & Huấn luyện','Sức khỏe & Khoa học sự sống','T00 T05 B00',1,[18,24],'tt yt xh gd ld',[7,14,35],8,12,7,
+ 'Phong trào thể thao, phòng tập, thể thao học đường và chăm sóc sức khỏe cộng đồng tăng nhu cầu huấn luyện viên, giáo viên thể chất, chuyên viên phục hồi và quản lý thể thao. Ngành hợp người có thể lực và thích hướng dẫn người khác.',
+ 'Huấn luyện viên, giáo viên giáo dục thể chất, chuyên viên thể lực, chuyên viên phục hồi vận động, quản lý câu lạc bộ và sự kiện thể thao','ĐH Thể dục Thể thao Bắc Ninh, ĐH Thể dục Thể thao TP.HCM, ĐH Sư phạm Thể dục Thể thao Hà Nội, ĐH Sư phạm TDTT TP.HCM','Thể lực nền, kỹ thuật một môn chính, giải phẫu và sinh lý vận động, xây dựng giáo án tập, giao tiếp và động viên, sơ cứu',
+ ['Tập đều một môn chính, giữ thể lực, học tốt Sinh; chuẩn bị bài thi năng khiếu thể dục thể thao theo yêu cầu trường.','Học giải phẫu, sinh lý vận động, lý luận huấn luyện; tham gia đội tuyển hoặc câu lạc bộ của trường.','Chọn hướng (huấn luyện, giáo dục thể chất, phục hồi, quản lý); lấy chứng chỉ trọng tài hoặc sơ cứu; thực tập tại câu lạc bộ.','Làm huấn luyện viên, giáo viên thể chất hoặc chuyên viên thể lực; lấy thêm chứng chỉ huấn luyện quốc tế.','Lên huấn luyện viên trưởng hoặc quản lý 14–35 triệu; mở phòng tập hoặc trung tâm đào tạo riêng.'])
+];
+DATA.forEach(m=>{
+  const [,w5]=[0,m.w[1]];
+  m.idx=Math.round(100*(.30*Math.min(m.gr/25,1)+.25*Math.min(w5/35,1)+.20*Math.min(m.d/80,1)+.25*(m.ai/10)));
+});
+
+
+const MAXT=5;
+const GH={'Công nghệ số':'--hb','Kỹ thuật & Sản xuất':'--ho','Kinh tế & Quản trị':'--hg','Sức khỏe & Khoa học sự sống':'--hp','Sáng tạo & Truyền thông':'--hv','Giáo dục & Xã hội':'--hy'};
+const CATC={'Công nghệ & số':'--hb','Kỹ thuật & khoa học':'--ho','Sức khỏe & thiên nhiên':'--hp','Kinh doanh & xã hội':'--hg','Sáng tạo':'--hv'};
+const hl=g=>`var(${GH[g]||'--hb'})`;
+const $=s=>document.querySelector(s);
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const st={lv:0,combos:new Set(),tags:new Set(),sort:'match',group:'all',q:{},a:{}};
+try{
+  const r=JSON.parse(localStorage.getItem('lbnn4')||'null');
+  if(r){
+    st.lv=LV.some(l=>l.id===r.lv)?r.lv:0;
+    (r.c||[]).forEach(c=>{if(CB[c])st.combos.add(c)});
+    (r.t||[]).slice(0,MAXT).forEach(t=>{if(TG[t])st.tags.add(t)});
+    if(r.s&&!isNaN(parseFloat(r.s)))$('#score').value=r.s;
+    if(r.a&&typeof r.a==='object')Object.keys(r.a).forEach(k=>{if(/^k\d+_[0-2]$/.test(k)&&r.a[k]>=1&&r.a[k]<=5)st.a[k]=r.a[k]});
+    if(r.q&&typeof r.q==='object')Object.keys(r.q).forEach(k=>{if(/^[hse]\d+$/.test(k)&&r.q[k]>=1&&r.q[k]<=5)st.q[k]=r.q[k]});
+  }
+}catch(e){}
+const save=()=>{try{localStorage.setItem('lbnn4',JSON.stringify({lv:st.lv,c:[...st.combos],t:[...st.tags],s:$('#score').value,q:st.q,a:st.a}))}catch(e){}};
+
+// controls are built once; later only aria-pressed changes, so keyboard focus is never lost
+$('#levels').innerHTML=LV.map(l=>`<button type="button" class="level" data-lv="${l.id}"><span class="box"></span><span><b>${l.n}</b><span class="s" style="display:block">${l.r}</span></span></button>`).join('');
+$('#combos').innerHTML=Object.entries(CB).map(([k,v])=>`<button type="button" class="chip" data-c="${k}">${k}<small>${v}</small></button>`).join('');
+$('#tags').innerHTML=TGC.map(([title,,ids])=>{const c=CATC[title]||'--hb';return `<div class="cat" style="--cc:var(${c})"><h4>${title}</h4><div class="chips">${ids.split(' ').map(id=>`<button type="button" class="chip" style="--cc:var(${c})" data-t="${id}">${TG[id]}</button>`).join('')}</div></div>`}).join('');
+
+// ===== personality quiz (Holland + soft skills + extraversion) =====
+const HOL={R:'Thực tế',I:'Nghiên cứu',A:'Nghệ thuật',S:'Xã hội',E:'Quản lý',C:'Nề nếp'};
+const QH=[['R','Tôi thích lắp ráp, sửa chữa hoặc vận hành máy móc, thiết bị.'],['R','Tôi thích làm việc ngoài trời hoặc với dụng cụ, vật liệu thật.'],
+ ['I','Tôi thích tìm hiểu vì sao sự việc xảy ra và giải các bài toán khó.'],['I','Tôi thích làm thí nghiệm, phân tích số liệu hoặc nghiên cứu.'],
+ ['A','Tôi thích vẽ, viết, thiết kế hoặc tạo ra thứ mới lạ.'],['A','Tôi thích tự do thể hiện ý tưởng, ít bị bó buộc theo khuôn mẫu.'],
+ ['S','Tôi thích giúp đỡ, giảng giải hoặc chăm sóc người khác.'],['S','Tôi thấy vui khi làm việc nhóm và lắng nghe người khác.'],
+ ['E','Tôi thích thuyết phục, dẫn dắt hoặc tổ chức một nhóm.'],['E','Tôi thích kinh doanh, đặt mục tiêu và đạt kết quả cụ thể.'],
+ ['C','Tôi thích sắp xếp, ghi chép và làm việc theo quy trình rõ ràng.'],['C','Tôi cẩn thận với con số, giấy tờ và chi tiết nhỏ.']];
+const SKN={gt:'Giao tiếp và thuyết trình',pb:'Tư duy phản biện, giải quyết vấn đề',ld:'Lãnh đạo và tổ chức',dc:'Thấu cảm và kiểm soát cảm xúc (EQ)',kl:'Kỷ luật và tỉ mỉ',st:'Sáng tạo'};
+const SKK=Object.keys(SKN);
+const TIP={
+ gt:'Tham gia câu lạc bộ tranh biện hoặc MC, thuyết trình trước lớp mỗi tháng một lần, tự ghi âm rồi nghe lại để sửa cách nói.',
+ pb:'Luyện bài toán mở và tình huống, tập hỏi "vì sao" rồi viết lại lập luận; thử các cuộc thi tư duy hoặc phân tích tình huống (case study).',
+ ld:'Nhận vai trưởng nhóm hoặc ban tổ chức một sự kiện lớp hoặc câu lạc bộ; tập chia việc, đặt mục tiêu rõ và nhận xét công bằng.',
+ dc:'Tập lắng nghe không ngắt lời, làm tình nguyện, viết nhật ký cảm xúc; tìm hiểu cách quản lý căng thẳng và giao tiếp đồng cảm.',
+ kl:'Lập thời khóa biểu tuần, dùng danh sách việc cần làm, nộp bài trước hạn một ngày và kiểm tra lại trước khi nộp.',
+ st:'Mỗi tuần làm một sản phẩm nhỏ (vẽ, viết, thiết kế, video); xem và phân tích tác phẩm tốt, tham gia câu lạc bộ sáng tạo.'};
+// per major: Holland code, minimum soft-skill levels (1-5), preferred extraversion (1 = alone, 5 = many people)
+const PROF={'Kỹ thuật phần mềm':['IRC',{pb:4,kl:3},2],'Trí tuệ nhân tạo':['ICR',{pb:5,kl:4},2],'An toàn thông tin':['IRC',{pb:4,kl:4},2],'Công nghệ bán dẫn':['IRC',{pb:4,kl:5},2],
+ 'Cơ điện tử':['RIC',{pb:4,kl:4},3],'Kỹ thuật ô tô':['RIC',{pb:3,kl:4},3],'Năng lượng tái tạo':['RIC',{pb:4,kl:4},3],'Logistics':['ECR',{ld:3,gt:3,kl:4},3],
+ 'Kinh doanh quốc tế':['ECS',{gt:4,ld:3},4],'Tài chính':['ECI',{pb:4,kl:4,gt:3},3],'Marketing':['EAS',{gt:4,st:4,ld:3},4],'Kế toán':['CEI',{kl:5,pb:3},2],
+ 'Y khoa':['ISR',{dc:4,kl:5,pb:4},3],'Dược học':['ICR',{kl:5,pb:3},2],'Điều dưỡng':['SRC',{dc:5,kl:4,gt:3},3],'Công nghệ sinh học':['IRC',{kl:4,pb:3},2],
+ 'Khoa học môi trường':['IRS',{pb:3,dc:3},3],'Thiết kế đồ họa':['AIE',{st:5,gt:3},3],'Ngôn ngữ':['ASE',{gt:4,dc:3},4],'Du lịch':['SEC',{gt:4,dc:4,ld:3},5],
+ 'Sư phạm':['SEA',{gt:4,dc:4,ld:3},4],'Luật kinh tế':['EIS',{pb:5,gt:4,kl:4},3],'Kiến trúc':['AIR',{st:5,kl:3},3],'Nông nghiệp':['RIE',{pb:3,kl:3},3],'Công tác xã hội':['SAE',{dc:5,gt:4,kl:3},4],
+ 'Âm nhạc':['ASE',{kl:5,st:4,gt:3},3],'Múa':['ASE',{kl:5,st:4,dc:3},4],'Diễn xuất':['AES',{st:5,dc:4,gt:4},4],'Báo chí':['AES',{gt:5,pb:4,st:3},4],'Thể dục':['RSE',{kl:5,ld:3,dc:3},4]};
+DATA.forEach(m=>{const k=Object.keys(PROF).find(p=>m.n.startsWith(p));if(k){[m.hc,m.need,m.ex]=PROF[k]}else{m.hc='IRC';m.need={};m.ex=3}});
+
+// ===== năng khiếu: 15 năng khiếu x 3 câu (thích, năng lực, trải nghiệm) =====
+const TGR=[['Âm nhạc & biểu diễn','hat nhay nhaccu sangtac dien mc'],['Mỹ thuật & sáng tạo','ve tk anh thucong'],['Ngôn từ & con người','viet ngoai nghe'],['Thể chất & tư duy','the logic']];
+// id: [tên, cách phát triển, [câu 1: mức thích, câu 2: năng lực thực tế, câu 3: trải nghiệm]]
+const TL={
+hat:['Hát','Học thanh nhạc cơ bản, tập thở và hát đúng cao độ, thu âm rồi nghe lại; thử thi hát hoặc hát trong đội văn nghệ.',['Tôi thích hát, kể cả khi chỉ hát một mình.','Tôi hát đúng nhịp, đúng cao độ khi học một bài mới.','Tôi từng hát trước đông người, đi thi hoặc được khen giọng.']],
+nhay:['Nhảy, múa','Học một thể loại có thầy hướng dẫn, tập thể lực và độ dẻo đều, quay video tự xem lại động tác; tham gia nhóm nhảy hoặc đội văn nghệ.',['Tôi thích nhảy hoặc múa, nghe nhạc là muốn chuyển động.','Tôi học động tác mới nhanh và giữ đúng nhịp.','Tôi từng biểu diễn, tham gia nhóm nhảy hoặc học lớp nhảy, múa.']],
+nhaccu:['Chơi nhạc cụ','Chọn một nhạc cụ chính, học đọc nhạc, luyện mỗi ngày 30 phút; chơi trong ban nhạc hoặc dàn nhạc của trường.',['Tôi thích chơi hoặc học một nhạc cụ (guitar, piano, trống, sáo...).','Tôi đọc được nốt nhạc hoặc chơi trọn vẹn được một bài.','Tôi từng học bài bản, biểu diễn hoặc thi nhạc cụ.']],
+sangtac:['Sáng tác nhạc','Tập viết giai điệu hoặc lời mỗi tuần, học phần mềm làm nhạc như FL Studio hoặc Ableton; đăng thử và nhận góp ý.',['Tôi thích tự nghĩ giai điệu, lời bài hát hoặc phối nhạc.','Tôi đã hoàn thành ít nhất một ca khúc hoặc bản nhạc của riêng mình.','Tôi từng chia sẻ hoặc dự thi sáng tác của mình.']],
+dien:['Diễn xuất, sân khấu','Tham gia câu lạc bộ kịch, tập đọc diễn cảm và biểu cảm trước gương; xem và phân tích cách diễn viên xử lý vai.',['Tôi thích đóng vai, diễn kịch hoặc nhập vai nhân vật.','Tôi biểu cảm tự nhiên, thuộc lời thoại và không ngại diễn trước người khác.','Tôi từng diễn kịch, đóng phim ngắn hoặc tham gia câu lạc bộ sân khấu.']],
+mc:['MC, thuyết trình','Xin dẫn chương trình lớp hoặc sự kiện của trường, ghi âm hoặc quay lại phần nói để sửa; tham gia tranh biện.',['Tôi thích đứng trước đông người để nói chuyện hoặc dẫn chương trình.','Tôi nói rõ ràng, tự tin, biết giữ nhịp và xử lý được câu hỏi bất ngờ.','Tôi từng làm MC, thuyết trình đại diện lớp hoặc tranh biện.']],
+ve:['Vẽ, hội họa','Vẽ ký họa mỗi ngày, học bố cục, đậm nhạt và màu sắc; theo lớp vẽ nếu định thi khối V hoặc H.',['Tôi thích vẽ, phác thảo hoặc tô màu.','Tôi vẽ được người, vật hoặc phong cảnh giống thật, có bố cục và đậm nhạt.','Tôi từng học vẽ, đạt giải hoặc có sổ tranh riêng.']],
+tk:['Thiết kế, thẩm mỹ','Làm poster, logo hoặc bài thuyết trình đẹp cho lớp mỗi tháng; học Canva hoặc Figma và phân tích thiết kế tốt.',['Tôi để ý màu sắc, kiểu chữ và bố cục đẹp hay xấu.','Tôi dùng được công cụ thiết kế (Canva, Figma, Photoshop...) để làm sản phẩm gọn gàng.','Tôi từng thiết kế poster, logo hoặc bìa cho người khác dùng.']],
+anh:['Chụp ảnh, quay dựng','Chụp và quay đều, học bố cục, ánh sáng và dựng clip; làm một video ngắn có kịch bản hoàn chỉnh.',['Tôi thích chụp ảnh, quay video hoặc dựng clip.','Tôi biết chọn góc máy, ánh sáng và dựng clip có nhịp, có câu chuyện.','Tôi từng đăng hoặc được nhờ làm ảnh, video, hoặc thi làm phim.']],
+thucong:['Khéo tay, làm mô hình','Làm một mô hình hoặc sản phẩm hoàn chỉnh mỗi quý, học đo đạc và dùng dụng cụ an toàn; tham gia câu lạc bộ STEM hoặc handmade.',['Tôi thích tự tay làm mô hình, đồ thủ công hoặc lắp ráp.','Tôi khéo tay, làm tỉ mỉ, cắt dán, may vá hoặc lắp mô hình chính xác.','Tôi từng làm ra sản phẩm hoàn chỉnh và được người khác khen hoặc dùng.']],
+viet:['Viết lách','Viết đều mỗi tuần (nhật ký, truyện, bài luận), nhờ người đọc góp ý; gửi bài cho báo trường hoặc cuộc thi viết.',['Tôi thích viết truyện, thơ, nhật ký hoặc bài luận.','Tôi diễn đạt rõ ý, dùng từ hay và ít lỗi.','Tôi từng được khen bài văn, đạt giải hoặc được đăng bài.']],
+ngoai:['Ngoại ngữ','Nghe và nói mỗi ngày với phim, podcast và bạn luyện; đặt mục tiêu chứng chỉ (IELTS, JLPT, HSK, TOPIK...).',['Tôi thích học ngoại ngữ, xem phim hoặc nghe nhạc bằng tiếng nước ngoài.','Tôi nghe và nói được các tình huống thường ngày bằng ngoại ngữ.','Tôi có chứng chỉ, điểm cao hoặc từng giao tiếp với người nước ngoài.']],
+nghe:['Lắng nghe, đồng cảm','Tập lắng nghe không ngắt lời, tham gia tình nguyện hoặc làm bạn đồng hành học tập; tìm hiểu cơ bản về tâm lý.',['Tôi thích lắng nghe, an ủi và giúp bạn bè giải quyết chuyện riêng.','Mọi người hay tìm tôi tâm sự vì tôi bình tĩnh và biết nghe.','Tôi từng làm tình nguyện, hướng dẫn bạn, trông trẻ hoặc chăm sóc người thân.']],
+the:['Thể thao, thể lực','Chọn một môn và tập đều theo giáo án, theo dõi tiến bộ; tham gia giải của trường để lấy kinh nghiệm thi đấu.',['Tôi thích vận động và chơi thể thao.','Tôi khỏe, bền, phối hợp tay chân tốt và hồi phục nhanh.','Tôi từng tập thường xuyên, thi đấu hoặc vào đội tuyển trường.']],
+logic:['Toán, logic, giải đố','Giải đố và bài toán mở mỗi tuần, học lập trình cơ bản hoặc tham gia câu lạc bộ Toán, Tin, Cờ vua.',['Tôi thích giải đố, bài toán khó hoặc xếp hình logic.','Tôi tìm ra quy luật và giải thích được cách làm.','Tôi từng đạt điểm cao Toán hoặc Tin, thi học sinh giỏi hoặc lập trình thi đấu.']]};
+const TLK=Object.keys(TL);
+// ngành -> năng khiếu liên quan
+const TM={'Kỹ thuật phần mềm':'logic','Trí tuệ nhân tạo':'logic','An toàn thông tin':'logic','Công nghệ bán dẫn':'logic thucong','Cơ điện tử':'thucong logic','Kỹ thuật ô tô':'thucong logic','Năng lượng tái tạo':'logic thucong','Logistics':'logic mc','Kinh doanh quốc tế':'ngoai mc','Tài chính':'logic','Marketing':'mc viet tk anh','Kế toán':'logic','Y khoa':'nghe thucong logic','Dược học':'logic thucong','Điều dưỡng':'nghe thucong the','Công nghệ sinh học':'logic thucong','Khoa học môi trường':'nghe logic','Thiết kế đồ họa':'ve tk anh','Ngôn ngữ':'ngoai viet mc','Du lịch':'ngoai mc nghe','Sư phạm':'mc nghe viet','Luật kinh tế':'mc viet ngoai','Kiến trúc':'ve tk thucong','Nông nghiệp':'thucong logic','Công tác xã hội':'nghe mc viet','Âm nhạc':'hat nhaccu sangtac','Múa':'nhay dien the','Diễn xuất':'dien mc viet sangtac','Báo chí':'mc viet anh ngoai','Thể dục':'the nghe'};
+DATA.forEach(m=>{const k=Object.keys(TM).find(p=>m.n.startsWith(p));m.tl=k?TM[k].split(' '):[]});
+let TS={};
+const tScores=()=>{const o={};TLK.forEach((id,i)=>{const v=[0,1,2].map(j=>st.a['k'+i+'_'+j]);if(v.every(Boolean))o[id]={s:(.3*(v[0]-1)+.45*(v[1]-1)+.25*(v[2]-1))/4,v}});return o};
+const tlev=s=>s>=.75?'Nổi trội':s>=.55?'Khá':s>=.35?'Có tiềm năng':'Chưa rõ';
+const sn=m=>m.n.split(' / ')[0].split(' & ')[0].split(' (')[0];
+function tNote(id){const v=TS[id].v,s=TS[id].s;
+  if(v[0]>=4&&v[1]<=2)return 'Bạn thích nhưng kỹ năng còn thấp: đây là điều luyện được, chưa phải rào cản.';
+  if(v[0]<=2&&v[1]>=4)return 'Bạn làm tốt nhưng chưa thật sự thích; hãy cân nhắc kỹ trước khi chọn làm nghề.';
+  if(s>=.55&&v[2]<=2)return 'Bạn có năng lực nhưng ít trải nghiệm thực tế; hãy tìm cuộc thi hoặc câu lạc bộ để có thêm bằng chứng cho hồ sơ.';
+  return s>=.75?'Đây là điểm mạnh nổi bật của bạn.':'';
+}
+function tBuild(){
+  const E=[['Không đúng','Rất đúng'],['Còn yếu','Rất tốt'],['Chưa từng','Nhiều lần']];
+  const sc=(n,l)=>`<div class="scale" role="radiogroup">${[1,2,3,4,5].map(v=>`<label><input type="radio" name="${n}" value="${v}"${st.a[n]===v?' checked':''}><span>${v}</span></label>`).join('')}<span class="ends"><span>${l[0]}</span><span>–</span><span>${l[1]}</span></span></div>`;
+  $('#talent').innerHTML=TGR.map(([g,ids])=>`<div class="qg"><h5>${g}</h5><p class="qh">Mỗi năng khiếu có 3 câu: mức thích, năng lực thực tế và trải nghiệm. Chấm 1 đến 5; bỏ qua năng khiếu bạn không quan tâm.</p>${ids.split(' ').map(id=>{const i=TLK.indexOf(id);return `<div class="tl"><div class="tl-h"><b>${TL[id][0]}</b><span class="lvl" id="tlv${i}"></span></div>${TL[id][2].map((q,j)=>`<fieldset class="q"><legend>${q}</legend>${sc('k'+i+'_'+j,E[j])}</fieldset>`).join('')}</div>`}).join('')}</div>`).join('');
+}
+function tpanel(){
+  const ids=Object.keys(TS).sort((a,b)=>TS[b].s-TS[a].s);if(!ids.length)return '';
+  const bars=ids.map(id=>`<div class="r${TS[id].s>=.55?' on':''}"><span>${TL[id][0]}</span><div class="t"><i style="width:${Math.max(4,Math.round(TS[id].s*100))}%"></i></div><em>${tlev(TS[id].s)}</em></div>`).join('');
+  const det=ids.filter(id=>TS[id].s>=.55||TS[id].v[0]>=4).slice(0,6).map(id=>{
+    const ms=DATA.filter(m=>m.tl.includes(id)).map(sn).slice(0,5).join(', ');
+    return `<div class="gap"><b>${TL[id][0]}</b><span class="lv">${tlev(TS[id].s)}</span><p>${tNote(id)} ${ms?'Ngành liên quan: '+esc(ms)+'.':''}</p><p>${TL[id][1]}</p></div>`}).join('');
+  const art=ids.some(id=>['hat','nhay','nhaccu','sangtac','dien'].includes(id)&&TS[id].s>=.55)&&!['N00','N01','S00'].some(c=>st.combos.has(c));
+  const spo=TS.the&&TS.the.s>=.55&&!['T00','T05'].some(c=>st.combos.has(c));
+  const hint=(art||spo)?'<p class="remark">Bạn có năng khiếu nghệ thuật hoặc thể thao khá nổi. Ngành năng khiếu cần tổ hợp N00, N01, S00 (nghệ thuật) hoặc T00, T05 (thể thao); hãy chọn thêm ở bước 2 để xem các ngành này.</p>':'';
+  return `<div class="tprof"><h4>Hồ sơ năng khiếu của bạn</h4>${hint}<div class="hol wide">${bars}</div>${det?`<div class="gaps">${det}</div>`:''}<p class="qh">Đây là tự đánh giá, không thay thế buổi thi năng khiếu hoặc nhận xét của giáo viên chuyên môn.</p></div>`;
+}
+function tfit(m){
+  if(!Object.keys(TS).length||!m.tl.length)return '';
+  const rated=m.tl.filter(id=>TS[id]),miss=m.tl.filter(id=>!TS[id]);
+  const rows=rated.map(id=>`<div class="gap"><b>${TL[id][0]}</b><span class="lv">${tlev(TS[id].s)}</span><p>${tNote(id)||(TS[id].s<.55?TL[id][1]:'Là lợi thế cho ngành này.')}</p></div>`).join('');
+  return `<div class="persona"><h4>Năng khiếu của bạn so với ngành</h4>${rows||'<p class="qh">Bạn chưa đánh giá năng khiếu nào liên quan đến ngành này.</p>'}${miss.length?`<p class="qh">Ngành này còn xét: ${miss.map(id=>TL[id][0].toLowerCase()).join(', ')}. Làm thêm ở bước 5 để tính chính xác hơn.</p>`:''}</div>`;
+}
+function drawTalent(){
+  TLK.forEach((id,i)=>{const e=$('#tlv'+i);if(!e)return;const n=[0,1,2].filter(j=>st.a['k'+i+'_'+j]).length;e.textContent=TS[id]?tlev(TS[id].s):n?n+'/3 câu':''});
+  const ks=Object.keys(TS);$('#tn').textContent=ks.length;
+  const top=ks.filter(id=>TS[id].s>=.55).sort((a,b)=>TS[b].s-TS[a].s)[0];
+  $('#tcode').textContent=top?'Nổi bật: '+TL[top][0]:'';
+  $('#tprof').innerHTML=tpanel();
+}
+const QTOTAL=QH.length+SKK.length+1;
+function qBuild(){
+  const scale=(id,l1,l2)=>`<div class="scale" role="radiogroup">${[1,2,3,4,5].map(v=>`<label><input type="radio" name="${id}" value="${v}"${st.q[id]===v?' checked':''}><span>${v}</span></label>`).join('')}<span class="ends"><span>${l1}</span><span>–</span><span>${l2}</span></span></div>`;
+  $('#quiz').innerHTML=
+   `<div class="qg"><h5>Điều bạn thích làm (mô hình Holland)</h5><p class="qh">Chọn 1 nếu hoàn toàn không đúng với bạn, 5 nếu rất đúng.</p>${QH.map((q,i)=>`<fieldset class="q"><legend>${q[1]}</legend>${scale('h'+(i+1),'Không đúng','Rất đúng')}</fieldset>`).join('')}</div>`+
+   `<div class="qg"><h5>Kỹ năng mềm, tự đánh giá</h5><p class="qh">Chấm thật lòng. Chọn 1 nếu bạn thấy mình còn yếu, 5 nếu rất tốt.</p>${SKK.map((k,i)=>`<fieldset class="q"><legend>${SKN[k]}</legend>${scale('s'+(i+1),'Còn yếu','Rất tốt')}</fieldset>`).join('')}</div>`+
+   `<div class="qg"><h5>Năng lượng của bạn</h5><p class="qh">Một chiều của MBTI (hướng ngoại và hướng nội), chỉ mang tính tham khảo.</p><fieldset class="q"><legend>Tôi nạp lại năng lượng khi ở cạnh nhiều người hơn là khi ở một mình.</legend>${scale('e1','Thích ở một mình','Thích đông người')}</fieldset></div>`;
+}
+function userProfile(){
+  if(Object.keys(st.q).length<QTOTAL)return null;
+  const hol={R:0,I:0,A:0,S:0,E:0,C:0};
+  QH.forEach((q,i)=>{hol[q[0]]+=st.q['h'+(i+1)]});
+  const sk={};SKK.forEach((k,i)=>{sk[k]=st.q['s'+(i+1)]});
+  const code=Object.entries(hol).sort((a,b)=>b[1]-a[1]).slice(0,3).map(x=>x[0]).join('');
+  return {hol,sk,ex:st.q.e1,code};
+}
+function personaFit(m,u){
+  const hf=[...m.hc].reduce((s,ch,i)=>s+[3,2,1][i]*((u.hol[ch]-2)/8),0)/6;
+  const needs=Object.entries(m.need);
+  const gaps=needs.map(([k,L])=>({k,need:L,have:u.sk[k],gap:Math.max(0,L-u.sk[k])})).filter(g=>g.gap>0).sort((a,b)=>b.gap-a.gap);
+  const sf=needs.length?Math.max(0,1-gaps.reduce((s,g)=>s+g.gap,0)/(2*needs.length)):1;
+  const exGap=u.ex-m.ex;const pen=Math.max(0,Math.abs(exGap)-1)*.12;
+  return {pf:Math.max(0,Math.min(1,.6*hf+.4*sf-pen)),gaps,exGap,hf};
+}
+
+function sync(){
+  document.querySelectorAll('[data-lv]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.lv===st.lv)));
+  document.querySelectorAll('[data-c]').forEach(b=>b.setAttribute('aria-pressed',String(st.combos.has(b.dataset.c))));
+  document.querySelectorAll('[data-t]').forEach(b=>b.setAttribute('aria-pressed',String(st.tags.has(b.dataset.t))));
+  const n=(st.lv?1:0)+(st.combos.size?1:0)+(st.tags.size?1:0);
+  $('#pn').textContent=n;$('#pf').style.width=(n/3*100)+'%';$('#tc').textContent=st.tags.size;
+  const qa=Object.keys(st.q).length;$('#qn').textContent=qa;const up=userProfile();$('#qcode').textContent=up?'Mã Holland của bạn: '+up.code:'';
+  TS=tScores();drawTalent();drawSummary();
+}
+function drawSummary(){
+  const all=DATA.filter(m=>(!st.lv||st.lv>=m.l)&&(!st.combos.size||[...st.combos].some(x=>m.c.includes(x)))&&(!st.tags.size||[...st.tags].some(x=>m.t.includes(x)))).length;
+  const sc=parseFloat($('#score').value),up=userProfile();
+  const row=(k,v)=>`<div><dt>${k}</dt><dd${v?'':' class="empty-v"'}>${v||'Chưa chọn'}</dd></div>`;
+  $('#sumlist').innerHTML=
+    row('Học lực',st.lv?LV[st.lv-1].n+' ('+LV[st.lv-1].r.toLowerCase()+')':'')+
+    row('Điểm dự kiến 3 môn',isNaN(sc)?'':String(sc).replace('.',','))+
+    row('Tổ hợp',[...st.combos].join(', '))+
+    row('Sở thích',[...st.tags].map(x=>TG[x]).join(', '))+
+    row('Mã Holland',up?up.code:'')+
+    row('Năng khiếu nổi trội',Object.keys(TS).filter(id=>TS[id].s>=.55).sort((a,b)=>TS[b].s-TS[a].s).slice(0,4).map(id=>TL[id][0]).join(', '));
+  $('#sumcount').innerHTML=(st.lv||st.combos.size||st.tags.size)?`Ngành khớp các mục đã chọn<b>${all}</b>trên tổng ${DATA.length} ngành`:`Chọn học lực, tổ hợp và sở thích để xem số ngành phù hợp.`;
+}
+const results=()=>$('#results');
+const go=id=>{const el=$(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})};
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  const d=b.dataset;
+  if(d.lv){st.lv=+d.lv;$('#err').textContent='';sync();save()}
+  else if(d.c){st.combos.has(d.c)?st.combos.delete(d.c):st.combos.add(d.c);$('#err').textContent='';sync();save()}
+  else if(d.t){
+    if(st.tags.has(d.t)){st.tags.delete(d.t);$('#err').textContent=''}
+    else if(st.tags.size<MAXT){st.tags.add(d.t);$('#err').textContent=''}
+    else{$('#err').textContent='Tối đa '+MAXT+' sở thích. Bỏ chọn một mục để đổi.';return}
+    sync();save();
+  }
+  else if(b.id==='copy'){copyResult()}
+  else if(d.sort){st.sort=d.sort;render(false)}
+  else if(d.group){st.group=d.group;render(false)}
+});
+document.addEventListener('change',e=>{const i=e.target;if(i&&i.type==='radio'&&/^[hse]\d+$/.test(i.name)){st.q[i.name]=+i.value;sync();save()}else if(i&&i.type==='radio'&&/^k\d+_[0-2]$/.test(i.name)){st.a[i.name]=+i.value;sync();save()}});
+$('#cta1').onclick=()=>go('#start');
+$('#cta2').onclick=()=>go('#hotsec');
+$('#score').addEventListener('input',()=>{save();drawSummary()});
+$('#go').onclick=()=>{
+  if(!st.lv||!st.combos.size||!st.tags.size){
+    const miss=[!st.lv&&'học lực',!st.combos.size&&'tổ hợp',!st.tags.size&&'sở thích'].filter(Boolean).join(', ');
+    $('#err').textContent='Phiếu còn thiếu: '+miss+'.';return}
+  $('#err').textContent='';st.sort='match';st.group='all';save();render(true);go('#results');
+};
+$('#reset').onclick=()=>{
+  st.lv=0;st.combos.clear();st.tags.clear();st.sort='match';st.group='all';
+  st.q={};st.a={};qBuild();tBuild();$('#score').value='';$('#results').innerHTML='';$('#err').textContent='';sync();save();
+};
+
+function evaluate(m){
+  const cm=[...st.combos].filter(c=>m.c.includes(c));
+  const tm=[...st.tags].filter(t=>m.t.includes(t));
+  const lvOk=st.lv>=m.l;
+  const ti=Math.min(tm.length/Math.min(st.tags.size,3),1);
+  const cf=cm.length/st.combos.size,lf=lvOk?(st.lv>m.l?1:.8):0;
+  const up=userProfile();const pr=up?personaFit(m,up):null;
+  const base=pr?40*ti+20*cf+15*lf+25*pr.pf:55*ti+25*cf+20*lf;
+  const rel=m.tl.map(id=>TS[id]).filter(Boolean),tf=rel.length?rel.reduce((a,x)=>a+x.s,0)/rel.length:null;
+  const pct=tf==null?Math.round(base):Math.round(base*.85+15*tf);
+  return {m,cm,tm,lvOk,pct,pr,up,tf};
+}
+function chance(m){
+  const raw=$('#score').value;if(raw==='')return null;
+  const v=parseFloat(raw);if(isNaN(v)||v<0||v>30)return null;
+  if(v>=m.s[1])return {t:'điểm của bạn cao hơn mức tham khảo',c:'a'};
+  if(v>=m.s[0])return {t:'điểm trong khoảng cạnh tranh',c:'t'};
+  return {t:'cần thêm khoảng '+(m.s[0]-v).toFixed(1).replace('.',',')+' điểm',c:'w'};
+}
+const remark=p=>p>=90?'Rất phù hợp!':p>=80?'Phù hợp, nên chọn':p>=65?'Khá, cân nhắc thêm':p>=50?'Trung bình':'Cần cố gắng';
+function render(fresh){
+  TS=tScores();
+  const R=results();
+  const openNames=new Set([...R.querySelectorAll('details[open]')].map(d=>d.dataset.n));
+  const firstTime=fresh||!R.querySelector('details');
+  const all=DATA.map(evaluate);
+  let list=all.filter(r=>r.cm.length&&r.lvOk&&r.tm.length),note='';
+  if(!list.length){
+    list=all.filter(r=>r.cm.length&&r.lvOk);
+    note='Chưa có ngành nào khớp đủ cả ba tiêu chí. Dưới đây là các ngành khớp học lực và tổ hợp; hãy thử đổi sở thích để thu hẹp.';
+  }
+  if(!list.length){
+    list=all.filter(r=>r.cm.length);
+    note='Không có ngành nào khớp cả học lực và tổ hợp. Dưới đây là các ngành khớp tổ hợp nhưng cần học lực cao hơn mức bạn chọn; đây là mục tiêu để bạn nâng điểm.';
+  }
+  if(!list.length){
+    R.innerHTML='<div class="empty"><b>Chưa có ngành nào dùng các tổ hợp bạn chọn.</b><br>Hãy chọn thêm tổ hợp khác, ví dụ A00, A01 hoặc D01.</div>';return;
+  }
+  const groups=[...new Set(list.map(r=>r.m.g))];
+  if(st.group!=='all'&&!groups.includes(st.group))st.group='all';
+  const shown=list.filter(r=>st.group==='all'||r.m.g===st.group)
+    .sort((a,b)=>st.sort==='match'?b.pct-a.pct||b.m.idx-a.m.idx:b.m.idx-a.m.idx||b.pct-a.pct);
+  const names=new Set(shown.map(r=>r.m.n));
+  const keepOpen=firstTime?new Set([shown[0].m.n]):new Set([...openNames].filter(n=>names.has(n)));
+  window.__shown=shown;
+  R.innerHTML=`<div class="res-h"><h2>${list.length} ngành đã chấm điểm cho bạn</h2>
+    <p>Học lực ${LV[st.lv-1].n}, tổ hợp ${[...st.combos].join(', ')}, sở thích ${[...st.tags].map(t=>TG[t].toLowerCase()).join(', ')}.</p></div>
+    ${note?`<div class="notice">${note}</div>`:''}
+    ${tpanel()}
+    <div class="share"><button type="button" class="btn ghost" id="copy">Sao chép kết quả để gửi gia đình</button><span class="ok" id="copied"></span></div>
+    <div class="toolbar">
+      <div class="sort" role="group" aria-label="Sắp xếp"><span class="lbl">Xếp theo</span>
+        <button type="button" class="chip" data-sort="match" aria-pressed="${st.sort==='match'}">Điểm phù hợp</button>
+        <button type="button" class="chip" data-sort="idx" aria-pressed="${st.sort==='idx'}">Triển vọng 2030</button></div>
+      <div class="gf" role="group" aria-label="Lọc theo nhóm ngành"><span class="lbl">Nhóm ngành</span>
+        <button type="button" class="chip" data-group="all" aria-pressed="${st.group==='all'}">Tất cả</button>
+        ${groups.map(g=>`<button type="button" class="chip" data-group="${esc(g)}" aria-pressed="${st.group===g}">${esc(g)}</button>`).join('')}</div>
+    </div>
+    <div class="list">${shown.map((r,i)=>card(r,i,keepOpen.has(r.m.n),fresh)).join('')}</div>`;
+}
+function copyResult(){
+  const shown=window.__shown||[];
+  const lines=['Kết quả La Bàn Nghề Nghiệp','Học lực: '+LV[st.lv-1].n+' | Tổ hợp: '+[...st.combos].join(', ')+' | Sở thích: '+[...st.tags].map(t=>TG[t]).join(', ')+(userProfile()?' | Mã Holland: '+userProfile().code:''),''];
+  const tt=Object.keys(TS).filter(id=>TS[id].s>=.55).sort((a,b)=>TS[b].s-TS[a].s).map(id=>TL[id][0]+' ('+tlev(TS[id].s).toLowerCase()+')');if(tt.length)lines.splice(2,0,'Năng khiếu: '+tt.join(', '));
+  shown.slice(0,5).forEach((r,i)=>lines.push((i+1)+'. '+r.m.n+': phù hợp '+(r.pct/10).toFixed(1).replace('.',',')+'/10, triển vọng 2030 '+r.m.idx+'/100, lương sau 3-5 năm khoảng '+r.m.w[1]+' triệu/tháng'));
+  const text=lines.join('\n'),msg=$('#copied');
+  const fallback=()=>{
+    msg.textContent='Chọn và sao chép đoạn dưới đây:';
+    let ta=$('#copytext');if(!ta){ta=document.createElement('textarea');ta.id='copytext';ta.readOnly=true;msg.parentNode.appendChild(ta)}
+    ta.value=text;ta.focus();ta.select();
+  };
+  try{navigator.clipboard.writeText(text).then(()=>{msg.textContent='Đã sao chép';const x=$('#copytext');if(x)x.remove()},fallback)}catch(e){fallback()}
+}
+function tagList(s){return s.split(', ').map(x=>`<span>${esc(cap(x))}</span>`).join('')}
+function persona(m,r){
+  if(!r.pr)return '';
+  const {pr,up}=r;
+  const hol=Object.keys(HOL).map(ch=>`<div class="r${m.hc.includes(ch)?' on':''}"><span>${HOL[ch]}</span><div class="t"><i style="width:${((up.hol[ch]-2)/8*100).toFixed(0)}%"></i></div><em>${up.hol[ch]}</em></div>`).join('');
+  const gl=pr.gaps.map(g=>`<div class="gap"><b>${SKN[g.k]}</b><span class="lv">bạn ${g.have}/5, ngành cần ${g.need}/5</span><p>${TIP[g.k]}</p></div>`).join('');
+  let exn='';
+  if(pr.exGap<=-2)exn='<div class="gap"><b>Năng lượng giao tiếp</b><p>Ngành này thường làm việc với nhiều người, còn bạn nghiêng về hướng nội. Hãy luyện dần trong nhóm nhỏ 3 đến 5 người; người hướng nội vẫn làm tốt nếu chuẩn bị kỹ và chọn đúng vai trò.</p></div>';
+  if(pr.exGap>=2)exn='<div class="gap"><b>Năng lượng giao tiếp</b><p>Ngành này có nhiều thời gian làm việc độc lập, còn bạn thích ở cạnh nhiều người. Hãy thử các dự án cá nhân dài hơi để làm quen, và chọn môi trường làm việc có nhóm.</p></div>';
+  const bad=pr.pf<.5||pr.gaps.length>=2;
+  const lowNames=pr.gaps.slice(0,2).map(g=>SKN[g.k].toLowerCase()).join(', ');
+  const remark=bad?`<p class="remark">Lời phê: bạn hợp ngành này ở sở thích, nhưng các kỹ năng sau còn thấp hơn mức ngành yêu cầu: ${lowNames||'tính cách'}. Đây chưa phải lý do bỏ ngành, hãy bù đắp bằng các việc dưới đây.</p>`:'';
+  return `<div class="persona"><h4>Tính cách và kỹ năng của bạn so với ngành</h4>${remark}<div class="pf"><div><p style="font-size:13.5px;margin-bottom:10px">Mã Holland của bạn <b>${up.code}</b>, ngành thường hợp <b>${m.hc}</b>. Độ hợp tính cách <b>${Math.round(pr.pf*100)}%</b>.</p><div class="hol">${hol}</div></div><div class="gaps">${gl||exn?gl+exn:'<p class="ok">Bạn đã đạt các kỹ năng chính mà ngành yêu cầu.</p>'}</div></div></div>`;
+}
+function card(r,i,open,fresh){
+  const {m,cm,tm,lvOk,pct,pr}=r;
+  const ch=chance(m);
+  const grade=(pct/10).toFixed(1).replace('.',',');
+  const bars=['Mới ra trường','Sau 3–5 năm','Senior'].map((l,k)=>`<div class="bar"><span>${l}</span><div class="t"><i style="width:${(m.w[k]/80*100).toFixed(1)}%"></i></div><em>${m.w[k]} tr</em></div>`).join('');
+  const kpi=(v,l)=>`<div class="kpi"><b>${v}</b><span>${l}</span></div>`;
+  const pills=cm.map(c=>`<span class="t">Tổ hợp ${c}</span>`).join('')+tm.map(t=>`<span class="a">${TG[t]}</span>`).join('')
+    +`<span class="${lvOk?'':'w'}">${lvOk?'Đủ học lực':'Cần học lực '+LV[m.l-1].n}</span>`+(ch?`<span class="${ch.c}">${ch.t}</span>`:'')+(pr&&pr.gaps.length?`<span class="w">cần bù ${pr.gaps.length} kỹ năng</span>`:'')+(r.tf==null?'':r.tf>=.55?'<span class="a">Năng khiếu hợp</span>':r.tf<.35?'<span class="w">cần luyện năng khiếu</span>':'');
+  const anim=fresh?'':' style="animation:none"';
+  return `<details class="card" data-n="${esc(m.n)}" style="--gc:${hl(m.g)};--i:${Math.min(i,8)}" ${open?'open':''}>
+  <summary>
+    <div class="grade" aria-label="Điểm phù hợp ${grade} trên 10"><svg viewBox="0 0 96 78" aria-hidden="true"><path class="ring" pathLength="1"${anim} d="M8 40C6 18 34 6 56 8C82 10 92 30 84 50C76 68 40 74 20 64C12 60 9 50 8 40Z"/></svg><b${anim}>${grade}</b><small>${remark(pct)}</small></div>
+    <div><div class="gbadge"><i></i>${esc(m.g)}</div><h3>${esc(m.n)}</h3><div class="pills">${pills}</div></div>
+    <div class="prosp"><b>${m.idx}</b><span>triển vọng 2030</span>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+  </summary>
+  <div class="body">
+    <p class="pitch">${esc(m.p)}</p>
+    ${persona(m,r)}${tfit(m)}
+    <div class="cols">
+      <div><h4>Số liệu đến 2030 (ước tính)</h4>
+        <div class="kpis">${kpi('+'+m.gr+'%','tăng nhu cầu nhân lực mỗi năm')}${kpi(m.d+' nghìn','người thiếu hụt mỗi năm')}${kpi(m.ai+'/10','khả năng chống bị AI thay thế')}${kpi(m.s[0]+'–'+m.s[1],'điểm chuẩn tham khảo (thang 30)')}</div></div>
+      <div><h4>Thu nhập theo thời gian (triệu đồng/tháng)</h4><div class="bars">${bars}</div>
+        <p class="idx">Chỉ số triển vọng <b>${m.idx}</b>/100</p></div>
+    </div>
+    <div><h4>Lộ trình để đạt ngành này</h4>
+      <ol class="road">${m.r.map((t,k)=>`<li><span class="nn">${k+1}</span><b>${PH[k]}</b><span class="d">${esc(t)}</span></li>`).join('')}</ol></div>
+    <div class="cols">
+      <div><h4>Vị trí việc làm</h4><div class="tags">${tagList(m.j)}</div></div>
+      <div><h4>Kỹ năng cần có</h4><div class="tags">${tagList(m.k)}</div></div>
+    </div>
+    <div><h4>Trường tham khảo</h4><div class="tags">${tagList(m.u)}</div></div>
+  </div></details>`;
+}
+
+// leaderboard (same data as the cards)
+$('#hot').innerHTML=[...DATA].sort((a,b)=>b.idx-a.idx).slice(0,8).map((m,i)=>`<div class="hrow" style="--c:${hl(m.g)};--i:${i}"><span class="rk">${i+1}</span><span class="nm">${esc(m.n)}<small>${esc(m.g)}</small></span><div class="tr"><i style="width:${m.idx}%"></i></div><span class="vl">${m.idx}<small>/100</small></span></div>`).join('');
+
+// community careers
+$('#soccards').innerHTML=[['Sư phạm','--hy'],['Điều dưỡng','--hp'],['Luật kinh tế','--hb'],['Công tác xã hội','--hv'],['Khoa học môi trường','--hg']].map(([k,c])=>{
+  const m=DATA.find(x=>x.n.startsWith(k));if(!m)return '';
+  return `<div class="sn" style="--c:var(${c})"><b>${esc(m.n.split(' (')[0].split(' & ')[0])}</b><strong>+${m.gr}%</strong><em>tăng nhu cầu mỗi năm</em><em>Lương sau 3–5 năm: ${m.w[1]} triệu</em><em>Chống AI thay thế: ${m.ai}/10</em></div>`;
+}).join('');
+
+// interactive avatars in the hero
+(function(){
+  const info=$('#avinfo');if(!info)return;
+  const pick=['Kỹ thuật phần mềm','Y khoa','Sư phạm','Cơ điện tử','Công nghệ sinh học','Trí tuệ nhân tạo'];
+  const who=['Lập trình','Y tế','Giáo dục','Kỹ thuật','Khoa học','Dữ liệu'];
+  const gs=[...document.querySelectorAll('.tech clipPath[id^="av"]')].map(c=>c.parentNode);
+  gs.forEach((g,i)=>{
+    const inner=document.createElementNS('http://www.w3.org/2000/svg','g');inner.setAttribute('class','bobg');inner.style.setProperty('--bd',(-i*1.1)+'s');
+    while(g.firstChild)inner.appendChild(g.firstChild);
+    const ring=document.createElementNS('http://www.w3.org/2000/svg','circle');ring.setAttribute('r','38');ring.setAttribute('class','selring');
+    g.appendChild(inner);g.appendChild(ring);
+    g.classList.add('av');g.setAttribute('tabindex','0');g.setAttribute('role','button');g.setAttribute('aria-label','Xem ngành nhóm '+who[i].toLowerCase());
+    const show=()=>{
+      const m=DATA.find(x=>x.n.startsWith(pick[i]));if(!m)return;
+      gs.forEach(x=>x.classList.remove('on'));g.classList.add('on');
+      info.textContent=who[i]+': '+m.n.split(' / ')[0]+'. Nhu cầu nhân lực tăng khoảng '+m.gr+'% mỗi năm, lương sau 3–5 năm khoảng '+m.w[1]+' triệu đồng/tháng.';
+    };
+    g.addEventListener('click',show);
+    g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show()}});
+  });
+})();
+// reading progress
+(function(){
+  const bar=$('#sbar');if(!bar)return;let raf=0;
+  const upd=()=>{raf=0;const max=document.documentElement.scrollHeight-innerHeight;bar.style.transform='scaleX('+(max>0?Math.min(scrollY/max,1):0)+')'};
+  addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(upd)},{passive:true});upd();
+})();
+qBuild();tBuild();
+sync();
+</script>
